@@ -51,22 +51,22 @@ public class JUnitTest {
     
     @Test   
     public void testisTherePath() {
-        assertFalse(board.isTherePath(0, 0));
+        assertFalse(board.hasPath(0, 0));
     }
  
     @Test   
     public void testclaimPath() {
-        board.claimPath(0, 0);
+        board.claimPath(0, 0, 0);
     }
   
     @Test  
     public void testisPathClaimed() {
-        assertFalse(board.isPathClaimed(0, 0));
+        assertFalse(path.isClaimedBy(0));
     }
     
     @Test
     public void testcalculateLengthPoints() {
-        assertEquals(0, path.calculateLengthPoints());
+        assertEquals(0, path.calculateValue());
     }
     
     @Test
@@ -81,7 +81,7 @@ public class JUnitTest {
     
     @Test
     public void testclaim() {
-        path.claim(0, 0);
+        path.claim(0);
     }
     
     @Test

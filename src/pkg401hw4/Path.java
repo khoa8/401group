@@ -12,16 +12,21 @@ package pkg401hw4;
 public class Path {
     int color;
     int length;
-    int numPaths;
+    int loc1;
+    int loc2;
     int value;
-    String claim1; //Player
-    String claim2;
+    int claim1; //Player
+    int claim2;
     
-    public Path(int color, int length, int numPaths, int value) {
-        
+    public Path(int color, int length, int loc1, int loc2) {
+        this.color = color;
+        this.length = length;
+        this.loc1 = loc1;
+        this.loc2 = loc2;
+        this.value = value;
     }
     
-    public int calculateLengthPoints() {
+    public int calculateValue() {
         return 0;
     }
     
@@ -33,6 +38,11 @@ public class Path {
         return false;
     }
     
+    public boolean isClaimedBy(int player) {
+        //return claim1 == player || claim2 == player;
+        return false;
+    }
+    
     public int getColor() {
         return 0;
     }
@@ -41,16 +51,12 @@ public class Path {
         return 0;
     }
     
-    public int getNumPaths() {
-        return 0;
-    }
-    
     public int getValue() {
         return 0;
     }
     
-    public String getClaims() {
-        return "";
+    public int getClaims() {
+        return 0;
     }
     
     public int getClaim1() {
@@ -61,9 +67,8 @@ public class Path {
         return 0;
     }
     
-    public void claim(int i, int j) {
-        setClaim1();
-        setClaim2();
+    public void claim(int player) {
+        
     }
     
     public void setClaim1() {

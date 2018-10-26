@@ -14,16 +14,23 @@ public class Path {
     int length;
     int loc1;
     int loc2;
-    int value;
+    int numPaths;
     int claim1; //Player
     int claim2;
     
-    public Path(int color, int length, int loc1, int loc2) {
+    public Path(int color, int length, int loc1, int loc2, int numPaths) {
         this.color = color;
         this.length = length;
         this.loc1 = loc1;
         this.loc2 = loc2;
-        this.value = value;
+        this.numPaths = numPaths;
+    }
+    
+    @Override
+    public String toString() { 
+        String s = "Path(" + loc1 + "," + loc2 + ") : Color " + color + " : Length " + length + "\n";
+        // claim1 claim2
+        return s;
     }
     
     public int calculateValue() {

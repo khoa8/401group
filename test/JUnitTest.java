@@ -27,7 +27,7 @@ public class JUnitTest {
     @BeforeClass
     public static void setUpClass() {
         board = new Board();
-        path = new Path(0, 0, 0, 0);
+        path = new Path(0, 0, 0, 0, 2);
         zone = new TrainCardZone();
         
     }

@@ -35,8 +35,8 @@ public class Board {
                     "| \\ / |\n" +
                     "|  2  |\n" +
                     "| / \\ |\n" +
-                    "3-----4\n";
-        // for loop s += ""
+                    "3-----4\n\n";
+        s += getPath(0,1).toString();
         return s;
     }
     
@@ -45,7 +45,7 @@ public class Board {
     }
     
     public void addPath(int i, int j) {
-        Path p = new Path(0,0,i,j);//
+        Path p = new Path(0,0,i,j,2);//
         paths[i][j] = p;
         paths[j][i] = p;
     }
@@ -74,19 +74,30 @@ public class Board {
         return length;
     }
     //work in progress
-    /*public ArrayList<Integer> longestHelper(int i, ArrayList<Integer> v) {
-        //int max = 0;
-        
+    /*public ArrayList<Integer> longestHelper(int i, ArrayList<Integer> visited) {
+        //ArrayList<Integer> biggest = visited;
+        //ArrayList<Integer> tempV;
         //if i is not visited
-            //add i to visited
+            //visited.add(0, i);
+            //biggest = calculateLength(v);
             //for(int n = 0; n < 5; n++) 
                 //if isClaimedBy(player, i, n)
                     //
-                    //ArrayList<Integer> visits = longestHelper(n, 
+                    //tempV = longestHelper(n, new ArrayList<Integer>(v);
+                    //if(calculateLenth(biggest) < calculate(tempV))
+                        //biggest = tempV;
+                    
         //else if i visited
-        //return 
-        return 0;
+            //return visited
     }*/
+    
+    //sum of paths to visited cities 
+    public int calculateLength(ArrayList<Integer> v) {
+        int n = 0;
+        for(int i = 0; i < v.size() - 1; i++)
+            n += getPath(v.indexOf(i), v.indexOf(i+1)).getLength();
+        return n;
+    }
     
     
     // if player paths for city1 or city2 do not exists,

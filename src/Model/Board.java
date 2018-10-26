@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class Board {
     final int NUM_CITIES = 9;
-    Path[][] paths;
-    ArrayList<Integer> visited = new ArrayList<>();
+    Path[][] paths; // incidence matrix
+    ArrayList<Integer> visited = new ArrayList<>(); // for search algorithm
     int longest;
     
     public Board() {
@@ -37,6 +37,13 @@ public class Board {
                     "| / \\ |\n" +
                     "3-----4\n\n";
         s += getPath(0,1).toString();
+        s += getPath(0,2).toString();
+        s += getPath(0,3).toString();
+        s += getPath(1,2).toString();
+        s += getPath(1,4).toString();
+        s += getPath(2,3).toString();
+        s += getPath(2,4).toString();
+        s += getPath(3,4).toString();
         return s;
     }
     
@@ -58,38 +65,42 @@ public class Board {
         return paths[i][j] instanceof Path;
     }
     
-    public void claimPath(int player, int i, int j) {
-        //paths[i][j].claim(0);
+    public void claimPath(Player player, int i, int j) {
+        paths[i][j].claim(player);
     }
     
-    public boolean isClaimedBy(int player, int i, int j) {
-         //if hasPath(i, n)
-            //if getPath(i, n).isClaimedBy(player)
-                //return true;
+    public boolean isClaimedBy(Player player, int i, int j) {
+        if(hasPath(i, j)){
+            if(getPath(i, j).isClaimedBy(player))
+                return true;
+        }
         return false;
     }
     
-    public int longest(int player, int i, int j, int length) {
+    public int longest(Player player, int i, int j, int length) {
         
         return length;
     }
+    
     //work in progress
-    /*public ArrayList<Integer> longestHelper(int i, ArrayList<Integer> visited) {
-        //ArrayList<Integer> biggest = visited;
-        //ArrayList<Integer> tempV;
-        //if i is not visited
-            //visited.add(0, i);
-            //biggest = calculateLength(v);
-            //for(int n = 0; n < 5; n++) 
-                //if isClaimedBy(player, i, n)
-                    //
-                    //tempV = longestHelper(n, new ArrayList<Integer>(v);
-                    //if(calculateLenth(biggest) < calculate(tempV))
-                        //biggest = tempV;
-                    
-        //else if i visited
-            //return visited
-    }*/
+    public ArrayList<Integer> longestHelper(Player player, int i, ArrayList<Integer> v) {
+        ArrayList<Integer> biggest = v; //list of visited cities
+        ArrayList<Integer> tempV = null;
+        if(!v.contains(i)) {
+            v.add(0, i);
+            for(int n = 0; n < 5; n++) {
+                if(isClaimedBy(player, i, n)) {
+                    tempV = longestHelper(player, n, new ArrayList<>(v));
+                    if(calculateLength(biggest) < calculateLength(tempV)) {
+                        biggest = tempV;
+                    }
+                }
+            }
+            return biggest;
+        }
+        else// if i visited
+            return v;
+    }
     
     //sum of paths to visited cities 
     public int calculateLength(ArrayList<Integer> v) {
@@ -103,35 +114,35 @@ public class Board {
     // if player paths for city1 or city2 do not exists,
     // then return false
     // else do search algorithm from city1 to city2
-    public boolean checkTicket(int player, int t) {
+    public boolean checkTicket(Player player, TicketCard ticket) {
         //check both loc1 and loc2 if there exists paths claimed by player
         //true or false
-        //boolean p1 p2
-        //for(int = j; j < 5; j++)
-            //if isClaimedBy(player, t.getloc1, i)
-                //p1 = true;
-        //for(int = i; i < 5; i++)
-            //if isClaimedBy(player, t.getloc2, i)
-                //p2 = true;
-        //if !p1 || !p2 then false
-        //else do algorithm
-        //visited.clear();
-        //return checkRoute(player, t.getloc1, t.getloc2);
-        //visited.clear();
-        return false;
+        boolean p1 = false, p2 = false;
+        for(int j = 0; j < 5; j++) {
+            if(isClaimedBy(player, ticket.getLocation1(), j))
+                p1 = true;
+        }
+        for(int i = 0; i < 5; i++) {
+            if(isClaimedBy(player, ticket.getLocation2(), i))
+                p2 = true;
+        }
+        if(!p1 || !p2) return false; //impossible route
+        //else
+        visited.clear();
+        return checkRoute(player, ticket.getLocation1(), ticket.getLocation2());
     }
     
     // search algorithm
-    public boolean checkRoute(int player, int i, int j) {
-        // found = false;
-        // if i == j 
-            // found = true;
-        //else if i is not visited
-            //add i to visited
-            //for(int n = 0; n < 5; n++) 
-                //if isClaimedBy(player, i, n)
-                    //found = checkRoute(player, n, j)
-        //
+    public boolean checkRoute(Player player, int i, int j) {
+        boolean found = false;
+        if(i == j) found = true;
+        else if(!visited.contains(i)) {
+            visited.add(0, i);
+            for(int n = 0; n < 5; n++) {
+                if(isClaimedBy(player, i, n))
+                    found = checkRoute(player, n, j);
+            }
+        }
         return false; //return found;
     }
     

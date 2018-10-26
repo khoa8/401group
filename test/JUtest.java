@@ -4,9 +4,7 @@
  * and open the template in the editor.
  */
 
-import Model.Board;
-import Model.Path;
-import Model.TrainCardZone;
+import Model.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,6 +20,7 @@ public class JUtest {
     static Board board;
     static Path path;
     static TrainCardZone zone;
+    static Player player;
     
     public JUtest() {
     }
@@ -31,6 +30,8 @@ public class JUtest {
         board = new Board();
         path = new Path(0, 0, 0, 0, 2);
         zone = new TrainCardZone();
+        player = new Player();
+        
         
     }
     
@@ -58,12 +59,12 @@ public class JUtest {
  
     @Test   
     public void testclaimPath() {
-        board.claimPath(0, 0, 0);
+        board.claimPath(player, 0, 0);
     }
   
     @Test  
     public void testisPathClaimed() {
-        assertFalse(path.isClaimedBy(0));
+        assertFalse(path.isClaimedBy(player));
     }
     
     @Test
@@ -83,7 +84,7 @@ public class JUtest {
     
     @Test
     public void testclaim() {
-        path.claim(0);
+        path.claim(player);
     }
     
     @Test

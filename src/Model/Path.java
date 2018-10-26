@@ -15,8 +15,8 @@ public class Path {
     int loc1;
     int loc2;
     int numPaths;
-    int claim1; //Player
-    int claim2;
+    Player claim1 = null;
+    Player claim2 = null;
     
     public Path(int color, int length, int loc1, int loc2, int numPaths) {
         this.color = color;
@@ -45,9 +45,8 @@ public class Path {
         return false;
     }
     
-    public boolean isClaimedBy(int player) {
-        //return claim1 == player || claim2 == player;
-        return false;
+    public boolean isClaimedBy(Player player) {
+        return claim1 == player || claim2 == player;
     }
     
     public int getColor() {
@@ -74,15 +73,12 @@ public class Path {
         return 0;
     }
     
-    public void claim(int player) {
-        
+    public void claim(Player player) {
+        if(claim1 != null)
+            claim1 = player;
+        else if(numPaths == 2)
+            claim2 = player;
+        //else no claim   
     }
     
-    public void setClaim1() {
-        
-    }
-    
-    public void setClaim2() {
-        
-    }
 }

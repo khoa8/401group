@@ -4,32 +4,29 @@
  * and open the template in the editor.
  */
 
+import Model.DiscardPile;
+import Model.TicketCard;
+import Model.TicketCardDeck;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import pkg401hw4.*;
 
 /**
  *
- * @author Viet
+ * @author Daniel
  */
 public class JUnitTest {
-    static Board board;
-    static Path path;
-    static TrainCardZone zone;
-    
+    //DiscardPile dp;
+    TicketCard tc = new TicketCard();
+    TicketCardDeck tcd = new TicketCardDeck();
     public JUnitTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
-        board = new Board();
-        path = new Path(0, 0, 0, 0, 2);
-        zone = new TrainCardZone();
-        
     }
     
     @AfterClass
@@ -38,70 +35,57 @@ public class JUnitTest {
     
     @Before
     public void setUp() {
+        
     }
     
     @After
     public void tearDown() {
     }
 
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+
     @Test
-    public void testaddPath() {
-        board.addPath(0, 0);
+    public void addTicketDecktest() {
+        //TicketCardDeck.java 
+        //test if ticket deck recieved the ticket card added to bottom of deck
+        tc = new TicketCard(4,5,6);
+         tcd.addTicketDeck(tc);
+         assertEquals(true, tcd.Ticketdeck.contains(tc));
     }
-    
-    @Test   
-    public void testisTherePath() {
-        assertFalse(board.hasPath(0, 0));
-    }
- 
-    @Test   
-    public void testclaimPath() {
-        board.claimPath(0, 0, 0);
-    }
-  
-    @Test  
-    public void testisPathClaimed() {
-        assertFalse(path.isClaimedBy(0));
-    }
-    
     @Test
-    public void testcalculateLengthPoints() {
-        assertEquals(0, path.calculateValue());
+    public void drawTicketCardtest() {
+        //TicketCardDeck.java 
+        //test if the top ticket card in deck is removed from the deck
+        tc = new TicketCard(4,5,7);
+        tcd.Ticketdeck.set(0, tc);
+        tcd.drawTicketCard();
+        assertEquals(false, tcd.Ticketdeck.contains(tc));
     }
-    
+    /*
+    //cant test for DiscardPile.java yet b/c our code aren't merged yet
     @Test
-    public void testisEmpty() {
-        assertFalse(path.isEmpty());
+    public void add1() {
+        //DiscardPile.java
+        //test if discarded traincard array is empty
+        
     }
-    
     @Test
-    public void testisFull() {
-        assertFalse(path.isFull());
+    public void remove1() {
+        //DiscardPile.java
+        //test if used train cards in hand are removed
+        
     }
-    
     @Test
-    public void testclaim() {
-        path.claim(0);
+    public void remove2() {
+        //DiscardPile.java 
+        //test if removed train card is in discard pile 
+        
     }
+*/
     
-    @Test
-    public void testpickCard() {
-        zone.pickCard();
-    }
     
-    @Test
-    public void testaddCard() {
-        zone.addCard();
-    }
     
-    @Test
-    public void testremoveCard() {
-        zone.removeCard();
-    }
-    
-    @Test
-    public void testhasThreeLocomotives() {
-        assertFalse(zone.hasThreeLocomotives());
-    }
-    
+            
+            
 }

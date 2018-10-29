@@ -10,8 +10,8 @@ package Model;
  * @author Viet
  */
 public class Path {
-    int color1;
-    int color2;
+    VALUE color1;
+    VALUE color2;
     int length;
     int loc1;
     int loc2;
@@ -19,7 +19,7 @@ public class Path {
     Player claim1 = null;
     Player claim2 = null;
     
-    public Path(int color1, int color2, int length, int loc1, int loc2, int numPaths) {
+    public Path(VALUE color1, VALUE color2, int length, int loc1, int loc2, int numPaths) {
         this.color1 = color1;
         this.color2 = color2;
         this.length = length;
@@ -33,17 +33,16 @@ public class Path {
         String s = "Path(" + loc1 + "," + loc2 + ") , Length(" + length + ")\n";
         s += color1 + " claimed by " + (claim1 == null ? "nobody" : claim1.toString());
         s += "\n";
-        s += color2 + " claimed by " + (claim2 == null ? "nobody" : claim2.toString());
-        s += "\n";
+        if(numPaths == 2) {
+            s += color2 + " claimed by " + (claim2 == null ? "nobody" : claim2.toString());
+            s += "\n";
+        }
         return s;
     }
     
-    public int calculateValue() {
-        return 0;
-    }
-    
     public boolean isEmpty() {
-        return false;
+        return (numPaths == 1 && claim1 == null) 
+                || (numPaths == 2 && claim1 == null && claim2 == null);
     }
     
     public boolean isFull() {
@@ -54,36 +53,38 @@ public class Path {
         return claim1 == player || claim2 == player;
     }
     
-    public int getColor() {
-        return 0;
+    public VALUE getColor1() {
+        return color1;
+    }
+    
+    public VALUE getColor2() {
+        return color2;
     }
     
     public int getLength() {
-        return 0;
+        return length;
     }
     
     public int getValue() {
-        return 0;
+        return calculateValue();
     }
     
-    public int getClaims() {
-        return 0;
+    public int calculateValue() {
+        //look at route length chart
+        return length;
     }
     
-    public int getClaim1() {
-        return 0;
+    public Player getClaim1() {
+        return claim1;
     }
     
-    public int getClaim2() {
-        return 0;
+    public Player getClaim2() {
+        return claim2;
     }
     
-    public void claim(Player player) {
-        if(claim1 != null)
-            claim1 = player;
-        else if(numPaths == 2)
-            claim2 = player;
-        //else no claim   
+    public void claim(Player player, VALUE color) {
+          if(color == color1) claim1 = player;
+          if(color == color2 && numPaths == 2) claim2 = player;
     }
     
 }

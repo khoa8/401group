@@ -23,13 +23,14 @@ public class JUtest {
     static Player player;
     static TrainCard card;
     
+    
     public JUtest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
         board = new Board();
-        path = new Path(0, 0, 0, 0, 0, 2);
+        path = new Path(VALUE.PINK,VALUE.PINK,6,0,0,2);
         zone = new TrainCardZone();
         player = new Player();
         card = new TrainCard();
@@ -51,7 +52,7 @@ public class JUtest {
 
     @Test
     public void testaddPath() {
-        board.addPath(0, 0);
+        new Path(VALUE.PINK,VALUE.PINK,6,4,4,2);
     }
     
     @Test   
@@ -61,7 +62,7 @@ public class JUtest {
  
     @Test   
     public void testclaimPath() {
-        board.claimPath(player, 0, 0);
+        board.claimPath(player, VALUE.PINK, 0, 0);
     }
   
     @Test  
@@ -86,7 +87,7 @@ public class JUtest {
     
     @Test
     public void testclaim() {
-        path.claim(player);
+        path.claim(player, VALUE.PINK);
     }
     
     @Test

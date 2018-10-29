@@ -21,6 +21,7 @@ public class JUtest {
     static Path path;
     static TrainCardZone zone;
     static Player player;
+    static TrainCard card;
     
     public JUtest() {
     }
@@ -28,9 +29,10 @@ public class JUtest {
     @BeforeClass
     public static void setUpClass() {
         board = new Board();
-        path = new Path(0, 0, 0, 0, 2);
+        path = new Path(0, 0, 0, 0, 0, 2);
         zone = new TrainCardZone();
         player = new Player();
+        card = new TrainCard();
         
         
     }
@@ -89,22 +91,17 @@ public class JUtest {
     
     @Test
     public void testpickCard() {
-        zone.pickCard();
+        zone.pickCard(0);
     }
     
     @Test
     public void testaddCard() {
-        zone.addCard();
+        zone.addCard(card);
     }
     
     @Test
-    public void testremoveCard() {
-        zone.removeCard();
-    }
-    
-    @Test
-    public void testhasThreeLocomotives() {
-        assertFalse(zone.hasThreeLocomotives());
+    public void testhasThreeRainbows() {
+        assertFalse(zone.hasThreeRainbows());
     }
     
 }

@@ -52,7 +52,7 @@ public class Board {
     }
     
     public void addPath(int i, int j) {
-        Path p = new Path(0,0,i,j,2);//
+        Path p = new Path(0,0,0,i,j,2);//
         paths[i][j] = p;
         paths[j][i] = p;
     }

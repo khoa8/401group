@@ -5,40 +5,53 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Viet
  */
 public class TrainCardZone {
-    //TrainCard[] trainCards;
+    ArrayList<TrainCard> zone;
     
     public TrainCardZone() {
-        
+        zone = new ArrayList<>();
     }
     
-    public void pickCard() {
-        getCard();
-        removeCard();
+    public ArrayList getCardArray() {
+        return zone;
     }
     
-    public int getCardArray() {
-        return 0;
+    public void addCard(TrainCard card) {
+        zone.add(card);
     }
     
-    public void addCard() {
-        
+    public int getSize() {
+        return zone.size();
     }
     
-    public int getCard() {
-        return 0;
+    public TrainCard pickCard(int i) {
+        TrainCard card = getCard(i);
+        removeCard(i);
+        return card;
     }
     
-    public void removeCard() {
-        
+    public TrainCard getCard(int i) {
+        return zone.get(i);
     }
     
-    public boolean hasThreeLocomotives() {
-        return false;
+    public void removeCard(int i) {
+        zone.remove(i);
+    }
+    
+    public boolean hasThreeRainbows() {
+        int rainbows = 0;
+        for(int i = 0; i < zone.size(); i++) {
+            //if(zone.get(i).getValue() == VALUE.RAINBOW)
+                //rainbows += 1;
+            
+        }
+        return rainbows >= 3;
     }
     
 }

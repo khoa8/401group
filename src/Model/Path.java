@@ -10,7 +10,8 @@ package Model;
  * @author Viet
  */
 public class Path {
-    int color;
+    int color1;
+    int color2;
     int length;
     int loc1;
     int loc2;
@@ -18,8 +19,9 @@ public class Path {
     Player claim1 = null;
     Player claim2 = null;
     
-    public Path(int color, int length, int loc1, int loc2, int numPaths) {
-        this.color = color;
+    public Path(int color1, int color2, int length, int loc1, int loc2, int numPaths) {
+        this.color1 = color1;
+        this.color2 = color2;
         this.length = length;
         this.loc1 = loc1;
         this.loc2 = loc2;
@@ -28,8 +30,11 @@ public class Path {
     
     @Override
     public String toString() { 
-        String s = "Path(" + loc1 + "," + loc2 + ") : Color " + color + " : Length " + length + "\n";
-        // claim1 claim2
+        String s = "Path(" + loc1 + "," + loc2 + ") , Length(" + length + ")\n";
+        s += color1 + " claimed by " + (claim1 == null ? "nobody" : claim1.toString());
+        s += "\n";
+        s += color2 + " claimed by " + (claim2 == null ? "nobody" : claim2.toString());
+        s += "\n";
         return s;
     }
     

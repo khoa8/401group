@@ -77,17 +77,35 @@ public class Board {
         return false;
     }
     
+    // (longest route rules???)
+    // finds longest route by 
+    // finding longest route starting from i, stopping at j or deadend
+    // and adding it to another route starting from j and stopping at visited or deadend
     public int longest(Player player, int i, int j, int length) {
-        
-        return length;
+        ArrayList<Integer> temp = new ArrayList<>();
+        temp.add(j);
+        temp = longestHelper(player, i, temp);
+        if(temp.get(0) == j) {  // longest has a loop j, ..., i, j
+            temp = reverseVisited(temp);    // j, i, ..., j
+            temp.remove(j); // remove first j (beginning), so longestHelper will add it again
+            temp.remove(j); // remove first j (endding) of loop, so longestHelper will work
+            temp = longestHelper(player, j, temp);
+            temp.add(temp.size(), j);   // add back the last j
+            return calculateLength(temp);
+        }
+        temp = reverseVisited(temp);    // j, i, ..., j
+        temp.remove(j); // remove first j (beginning), so longestHelper will add it again
+        temp = longestHelper(player, j, temp);
+        temp.add(temp.size(), j);   // add back the last j
+        return calculateLength(temp);
     }
     
-    //work in progress
+    // finds longest route 
     public ArrayList<Integer> longestHelper(Player player, int i, ArrayList<Integer> v) {
-        ArrayList<Integer> biggest = v; //list of visited cities
+        ArrayList<Integer> biggest = v; // list of visited cities
         ArrayList<Integer> tempV = null;
         if(!v.contains(i)) {
-            v.add(0, i);
+            v.add(0, i);    // adds to front of visited
             for(int n = 0; n < 5; n++) {
                 if(isClaimedBy(player, i, n)) {
                     tempV = longestHelper(player, n, new ArrayList<>(v));
@@ -108,6 +126,14 @@ public class Board {
         for(int i = 0; i < v.size() - 1; i++)
             n += getPath(v.indexOf(i), v.indexOf(i+1)).getLength();
         return n;
+    }
+    
+    public ArrayList<Integer> reverseVisited(ArrayList<Integer> v) {
+        ArrayList<Integer> reverse = new ArrayList<>();
+        for(int i: v) {
+            reverse.add(i);
+        }
+        return reverse;
     }
     
     

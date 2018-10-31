@@ -71,8 +71,7 @@ public class Board {
     
     public boolean isClaimedBy(Player player, int i, int j) {
         if(hasPath(i, j)){
-            if(getPath(i, j).isClaimedBy(player))
-                return true;
+            return getPath(i, j).isClaimedBy(player);
         }
         return false;
     }

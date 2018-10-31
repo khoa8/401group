@@ -30,11 +30,8 @@ public class JUtest {
     @BeforeClass
     public static void setUpClass() {
         board = new Board();
-        path = new Path(VALUE.PINK,VALUE.PINK,6,0,0,2);
         zone = new TrainCardZone();
         player = new Player();
-        card = new TrainCard();
-        
         
     }
     
@@ -49,60 +46,50 @@ public class JUtest {
     @After
     public void tearDown() {
     }
-
-    @Test
-    public void testaddPath() {
-        new Path(VALUE.PINK,VALUE.PINK,6,4,4,2);
-    }
     
     @Test   
     public void testisTherePath() {
-        assertFalse(board.hasPath(0, 0));
+        assertTrue(board.hasPath(0, 1));
+        assertTrue(board.hasPath(0, 2));
+        assertTrue(board.hasPath(0, 3));
     }
- 
+    
     @Test   
-    public void testclaimPath() {
-        board.claimPath(player, VALUE.PINK, 0, 0);
+    public void testisTherePathFalse() {
+        assertFalse(board.hasPath(0, 0));
     }
   
     @Test  
     public void testisPathClaimed() {
-        assertFalse(path.isClaimedBy(player));
-    }
-    
-    @Test
-    public void testcalculateLengthPoints() {
-        assertEquals(0, path.calculateValue());
-    }
-    
-    @Test
-    public void testisEmpty() {
-        assertFalse(path.isEmpty());
-    }
-    
-    @Test
-    public void testisFull() {
-        assertFalse(path.isFull());
-    }
-    
-    @Test
-    public void testclaim() {
-        path.claim(player, VALUE.PINK);
+        assertFalse(board.getPath(0, 1).isClaimedBy(player));
     }
     
     @Test
     public void testpickCard() {
-        zone.pickCard(0);
+        TrainCard card = new TrainCard(VALUE.RAINBOW);
+        zone.addCard(card);
+        TrainCard picked = zone.pickCard(0);
+        assertEquals(card, picked);
+        assertFalse(zone.getCardArray().contains(card));
     }
     
     @Test
     public void testaddCard() {
+        TrainCard card = new TrainCard(VALUE.RAINBOW);
         zone.addCard(card);
+        assertTrue(zone.getCardArray().contains(card));
     }
     
     @Test
-    public void testhasThreeRainbows() {
+    public void testhasThreeRainbowsFalse() {
         assertFalse(zone.hasThreeRainbows());
     }
+    
+    /*@Test
+    public void testhasThreeRainbows() {
+        zone.addCard(new TrainCard(VALUE.RAINBOW));
+        zone.addCard(new TrainCard(VALUE.RAINBOW));
+        assertTrue(zone.hasThreeRainbows());
+    }*/
     
 }

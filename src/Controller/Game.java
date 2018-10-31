@@ -102,14 +102,14 @@ public class Game {
     
     //##########RESET###########################################################
     public void reset() {
-        
+        //might not need this
     }
     
     public static void main(String args[]) {
         Game game = new Game();
         boolean keepPlaying = true;
         while(keepPlaying = true) {
-            game.reset();
+            //game.reset();
             game.initialize();
             game.play();
             keepPlaying = game.askToPlayAgain();

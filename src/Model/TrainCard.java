@@ -9,9 +9,6 @@ package Model;
  *
  * @author nguyenminhkhoa
  */
-enum VALUE {
-     PINK, WHITE, BLUE, YELLOW, ORANGE, BLACK, RED, GREEN, RAINBOW;
-}
 
 public class TrainCard {
     private VALUE color;

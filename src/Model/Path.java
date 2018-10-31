@@ -46,7 +46,8 @@ public class Path {
     }
     
     public boolean isFull() {
-        return false;
+        return (numPaths == 1 && claim1 != null) 
+                || (numPaths == 2 && claim1 != null && claim2 != null);
     }
     
     public boolean isClaimedBy(Player player) {

@@ -14,38 +14,86 @@ import java.util.Random;
  *
  * @author nguyenminhkhoa
  */
+/*
 enum CAR {
      BLUEcar, YELLOWcar, BLACKcar, REDcar, GREENcar;
 }
+*/
 
 public class Player {
     
     private int score;
     private String name;
     private int trains; //number of train cars;
-    private final List<TrainCard> hand;
+    private final List<TrainCard> handTrainC;
+    private final List<TicketCard> handTicketC;
     //private static final List<CAR> train = new ArrayList<>();
     //private static final int SIZE = train.size();
     //private static final Random rand = new Random();
     
     
     //initialize player with name, score, assign random color trains
-    public Player(){
-        this.hand = new ArrayList<>();
+    public Player(String name){
+        handTrainC = new ArrayList<>();
+        handTicketC = new ArrayList<>();
         //train.addAll(Arrays.asList(CAR.values()));
-        this.name = "A"; 
+        this.name = name; 
         score = 0;
         trains = 45;
     }
     
-    public List<TrainCard> getHand(){
-        return hand;
+    public List<TrainCard> getHandTrainC(){
+        return handTrainC;
+    }
+    
+    public List<TicketCard> getHandTicketC(){
+        return handTicketC;
     }
 
+    public void addTrainCard(TrainCard trc) {
+        handTrainC.add(trc);
+    }
+    
+    public void addTicketCard(TicketCard tic) {
+        handTicketC.add(tic);
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    // Get the number of card left in the player's hand
+    public int getHandTrainCSize() {
+        return handTrainC.size();
+    }
+    
+     public int getHandTicketCSize() {
+        return handTicketC.size();
+    }
+
+    // retrieve card at indicated position
+    public TrainCard getTrainCard(int CardToPlay) {
+        return handTrainC.get(CardToPlay);
+    }
+
+    public TicketCard getTicketCard(int CardToPlay) {
+        return handTicketC.get(CardToPlay);
+    }
+    
+    // remove selected card from hand
+    public void removeTrainCard(int CardToPlay) {
+        handTrainC.remove(CardToPlay);
+    }
+    
+    public void removeTicketCard(int CardToPlay) {
+        handTicketC.remove(CardToPlay);
+    }
+    
     @Override
     public String toString() {
         return "Player " + name + " {" +
-                "hand=" + hand + "}";
+                "handTrainCard= " + handTrainC +
+                "handTicketCard= " + handTicketC +" }";
     }
    
     //method to add score
@@ -68,11 +116,8 @@ public class Player {
         this.trains = num;
     }
     
-    public void end(){
-        //update number of trains left;
-        endOfGame();
-        //check whether the missions finish or not to update score;
-        //calculate final score;
+    public int getScore(){
+        return score;
     }
-    
+     
 }

@@ -17,7 +17,7 @@ public class TrainCardDeck{
     //initialize and create the deck of train card
     
     public TrainCardDeck(){
-        this.cardDeck = new ArrayList<>();
+        cardDeck = new ArrayList<>();
         
     //110 Train Car cards (12 each of Box-PINK, Passenger-WHITE, Tanker-BLUE, Reefer-YELLOW, 
     //Freight-ORANGE, Hopper-BLACK, Coal-RED, Caboose-GREEN, plus 14 Locomotives-RAINBOW)
@@ -53,7 +53,7 @@ public class TrainCardDeck{
     public void dealCard(Player player){
         //Get next card and add to hand of the player
         TrainCard removedCard = draw();
-        player.getHand().add(removedCard);
+        player.addTrainCard(removedCard);
     }
 
 

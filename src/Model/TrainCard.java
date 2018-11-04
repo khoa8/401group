@@ -20,4 +20,13 @@ public class TrainCard {
     public TrainCard(VALUE color){
         this.color = color;
     }
+    
+    public VALUE getValue(){
+        return color;
+    }
+    
+    @Override
+    public String toString(){
+        return color.toString();
+    }
 }

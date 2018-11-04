@@ -6,9 +6,7 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -23,7 +21,7 @@ enum CAR {
 public class Player {
     
     private int score;
-    private String name;
+    private final String name;
     private int trains; //number of train cars;
     private final List<TrainCard> handTrainC;
     private final List<TicketCard> handTicketC;
@@ -31,7 +29,7 @@ public class Player {
     //private static final int SIZE = train.size();
     //private static final Random rand = new Random();
     
-    
+   
     //initialize player with name, score, assign random color trains
     public Player(String name){
         handTrainC = new ArrayList<>();

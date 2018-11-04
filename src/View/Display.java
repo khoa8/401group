@@ -5,10 +5,42 @@
  */
 package View;
 
+import Model.*;
+import java.util.Scanner;
+
 /**
  *
  * @author Viet
  */
 public class Display {
-    
+    private final Scanner stdin = new Scanner(System.in);
+    public String PlayerName(){
+        System.out.println("Please enter the name of player: ");
+            return stdin.next();
+    }
+    public int drawTicketCardAtBeginning(TicketCard tc1,TicketCard tc2,TicketCard tc3){
+        System.out.println("a. "+tc1.toString());
+        System.out.println("b. "+tc2.toString());
+        System.out.println("c. "+tc3.toString());
+        System.out.println("Please choose to keep:");
+        System.out.println("1. All three.");
+        System.out.println("2. a + b");
+        System.out.println("3. a + c");
+        System.out.println("4. b + c");
+        return stdin.nextInt();
+    }
+    public void trainCardZone(TrainCardZone tcz){
+        System.out.println(tcz.getCardArray());
+    }
+    public int drawTrainCard(){
+        System.out.println("Please choose to draw:");
+        System.out.println("1. Blind draw.");
+        System.out.println("2. Face-up card draw.");
+        return stdin.nextInt();
+    }
+    public int drawTrainCardfromZone(TrainCardZone tcz){
+        System.out.println(tcz.getCardArray());
+        System.out.println("Please pick the index to draw:");
+        return stdin.nextInt();
+    }
 }

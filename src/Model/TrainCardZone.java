@@ -46,10 +46,8 @@ public class TrainCardZone {
     
     public boolean hasThreeRainbows() {
         int rainbows = 0;
-        for(int i = 0; i < zone.size(); i++) {
-            //if(zone.get(i).getValue() == VALUE.RAINBOW)
-                //rainbows += 1;
-            
+        for (int i=0; i<5; i++) {
+            if(zone.get(i).getValue() == VALUE.RAINBOW) rainbows++;
         }
         return rainbows >= 3;
     }

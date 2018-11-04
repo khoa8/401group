@@ -4,7 +4,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import static Model.VALUE.RAINBOW;
 /**
  *
@@ -32,7 +31,7 @@ public class TrainCardDeck{
     }
     
     //method to shuffle the deck
-    public static void shuffle(){ 
+    public void shuffle(){ 
          
         Collections.shuffle(cardDeck);
         /*Random rand = new Random();
@@ -76,8 +75,7 @@ public class TrainCardDeck{
     
     // return true if there are no cards left in the deck
     public boolean deckIsEmpty(){
-        if (getSizeOfDeck() > 0) return false;
-        return true;
+        return getSizeOfDeck() <= 0;
     }
 
 }

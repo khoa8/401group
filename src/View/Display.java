@@ -100,4 +100,9 @@ public class Display {
         System.out.print("Choose card to remove: ");
         return stdin.nextInt();
     }
+    
+    public char promptToPlayAgain() {
+        System.out.print("Play again? (Y/N): ");
+        return stdin.next().charAt(0);
+    }
 }

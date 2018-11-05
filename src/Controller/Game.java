@@ -248,15 +248,14 @@ public class Game {
     public static void main(String args[]) {
         Game game = new Game();
         boolean keepPlaying = true;
+        char c;
         while(keepPlaying == true) {
             //game.reset();
             game.initialize();
             game.play();
-            keepPlaying = game.askToPlayAgain();
+            c = game.view.promptToPlayAgain();
+            keepPlaying = (c == 'Y' || c == 'y');
         }
     }
     
-    public boolean askToPlayAgain() {
-        return false;
-    }
 }

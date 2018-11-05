@@ -6,34 +6,27 @@
 package Model;
 
 import java.util.ArrayList;
-
+import java.util.List;
 /**
  *
  * @author Daniel
  */
 public class DiscardPile {
     
-    public ArrayList <TrainCard> discarded = new ArrayList();  //discarded cards list created/ininlalized
-    
-    public void add(TrainCardDeck tcd) {
-        //put all discarded train cards back to train card deck when train deck is empty
-        //for (TrainCard tc : discarded){
-            //tcd.cardDeck.add(tc);
-            discarded.remove(0);
-        }
-        //for (TrainCard tr : discarded){
-            discarded.remove(0);
-        }
+    public static List <TrainCard> discarded = new ArrayList();  //discarded cards list created/ininlalized
+
+    public void resetDiscardPile() {
+        //empty the discardpile because the TrainCards in discard pile
+        //are put back in TrainCardDeck
+            discarded = new ArrayList();
     }
-    
-    public void remove(TrainCard [] discard) {
-        //move train cards from hand to discard pile;
-        for (TrainCard tc : discard){
-            discarded.add(tc);
-        }     
+    public void addDiscardPile(TrainCard discard) {
+        //move train card from hand to discard pile;
+            discarded.add(discard);     
     }
-    public TrainCard getDiscardPile(){
-        return discarded;
+    public TrainCard getDiscardPile() {
+        //get discardpile
+        return (TrainCard) discarded;
     }
 }
 

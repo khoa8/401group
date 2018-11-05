@@ -18,7 +18,7 @@ public class Game {
     static final int NUM_PLAYERS = 2;
     Display view = new Display();
     Board board;
-    Player player1;
+    Player player1; // Player[NUM_PLAYERS]
     Player player2;
     TrainCardDeck trainDeck;
     TicketCardDeck ticketDeck;
@@ -111,19 +111,19 @@ public class Game {
     public void play() {
         endGame = false;
         // Hardcoded
-        Player[] player = new Player[NUM_PLAYERS];
-        player[0] = player1;
-        player[1] = player2;
+        Player[] players = new Player[NUM_PLAYERS];
+        players[0] = player1;
+        players[1] = player2;
         //
         int i = 0;
         while(!endGame) {
             view.printToString(board.toString());   // Print board
-            view.printPlayerInfo(player[i].getName(), player[i].getScore(), 
-                    player[i].getHandTrainC(), player[i].getHandTicketC()); // Print player things
+            view.printPlayerInfo(players[i].getName(), players[i].getScore(), 
+                    players[i].getHandTrainC(), players[i].getHandTicketC()); // Print player things
             
-            performAction(player[i]);
+            performAction(players[i]);
             
-            endGame = player[i].endOfGame();
+            endGame = players[i].endOfGame();
             
             i++;
             if(i == NUM_PLAYERS) i = 0;
@@ -133,12 +133,12 @@ public class Game {
         int j = i;
         do {
             view.printToString(board.toString());   // Print board
-            view.printPlayerInfo(player[i].getName(), player[i].getScore(), 
-                    player[i].getHandTrainC(), player[i].getHandTicketC()); // Print player things
+            view.printPlayerInfo(players[i].getName(), players[i].getScore(), 
+                    players[i].getHandTrainC(), players[i].getHandTicketC()); // Print player things
             
-            performAction(player[i]);
+            performAction(players[i]);
             
-            endGame = player[i].endOfGame();
+            endGame = players[i].endOfGame();
             
             j++;
             if(j == NUM_PLAYERS) j = 0;
@@ -233,16 +233,34 @@ public class Game {
     }
     
     public void calculateWinner() {
-        //calculateScore(
+        Player winner = null;
+        int highestScore = 0;
+        view.printCalculating();
+        // Hardcoded
+        Player[] players = new Player[NUM_PLAYERS];
+        players[0] = player1;
+        players[1] = player2;
+        //
+        int[] scores = new int[NUM_PLAYERS];
+        for(int i = 0; i < NUM_PLAYERS; i++) {
+            scores[i] = calculateScore(players[i]);
+            if(scores[i] > highestScore) {
+                highestScore = scores[i];
+                winner = players[i];
+            }
+        }
+        view.printScores(players, scores);
+        view.printWinner(winner);
     }
     
-    public void calculateScore(Player player) {
-        
-    }
-    
-    //##########RESET###########################################################
-    public void reset() {
-        //might not need this
+    public int calculateScore(Player player) {
+        int score = player.getScore();
+        // +longest route
+        for(TicketCard card : player.getHandTicketC()) {
+            if(board.checkTicket(player, card))
+                score += card.getValue();
+        }
+        return score;
     }
     
     public static void main(String args[]) {
@@ -250,7 +268,6 @@ public class Game {
         boolean keepPlaying = true;
         char c;
         while(keepPlaying == true) {
-            //game.reset();
             game.initialize();
             game.play();
             c = game.view.promptToPlayAgain();

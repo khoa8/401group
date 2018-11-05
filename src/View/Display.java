@@ -105,4 +105,23 @@ public class Display {
         System.out.print("Play again? (Y/N): ");
         return stdin.next().charAt(0);
     }
+    
+    public void printCalculating() {
+        System.out.println("Calculating scores...");
+    }
+    
+    public void printScores(Player[] players, int[] scores) {
+        System.out.println("Scores:");
+        for(int i = 0; i < scores.length; i++) {
+            System.out.print(players[i].getName() + ":" + scores[i]);
+            if(i < scores.length - 1)
+                System.out.print(", ");
+        }
+        System.out.println();
+        
+    }
+    
+    public void printWinner(Player player) {
+        System.out.println("The winner is " + player + "!");
+    }
 }

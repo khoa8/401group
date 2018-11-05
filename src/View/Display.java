@@ -6,6 +6,7 @@
 package View;
 
 import Model.*;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -41,6 +42,62 @@ public class Display {
     public int drawTrainCardfromZone(TrainCardZone tcz){
         System.out.println(tcz.getCardArray());
         System.out.println("Please pick the index to draw:");
+        return stdin.nextInt();
+    }
+    
+    public void printToString(String s) {
+        System.out.println(s);
+    }
+    
+    public void printPlayerInfo(String name, int score, List<TrainCard> hand1, List<TicketCard> hand2) {
+        System.out.println(name + "'s turn!");
+        System.out.println("Score: " + score);
+        System.out.print("Train cards in hand:\n{");
+        for(TrainCard card : hand1) {
+            System.out.print(card.getValue());
+        }
+        System.out.print("}\nTicket cards in hand:\n{");
+        for(TrainCard card : hand1) {
+            System.out.print(card.getValue());
+        }
+        System.out.println("}");
+    }
+    
+    public int promptAction() {
+        System.out.println("Choose which action to take:");
+        System.out.println("1. Draw train cards");
+        System.out.println("2. Claim a path");
+        System.out.println("3. Draw ticket cards");
+        System.out.println("4. Skip turn");
+        System.out.print("Choose number: ");
+        return stdin.nextInt();
+    }
+    
+    public void promptPath() {
+        System.out.print("Choose which path to claim: ");
+    }
+    
+    public int promptCity() {
+        System.out.print("Choose city: ");
+        return stdin.nextInt();
+    }
+    
+    public int promptColor(VALUE value1, VALUE value2) {
+        System.out.println("1. " + value1);
+        System.out.println("1. " + value2);
+        System.out.print("Choose color: ");
+        return stdin.nextInt();
+    }
+    
+    public int promptRemoveColor(VALUE color, List<TrainCard> hand) {
+        int i = 0;
+        System.out.println("Claiming " + color);
+        System.out.println("-1. Done with claiming");
+        for(TrainCard card : hand) {
+            System.out.println(i + ". " + card.getValue());
+            i++;
+        }
+        System.out.print("Choose card to remove: ");
         return stdin.nextInt();
     }
 }

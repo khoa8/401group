@@ -25,6 +25,7 @@ public class Game {
     TrainCardZone zone;
     DiscardPile discarded;
     Player longestPathHolder;
+    boolean endGame;
     
     public Game() {}
     
@@ -108,16 +109,54 @@ public class Game {
     
     //##########PLAY############################################################
     public void play() {
-        //performAction();
+        endGame = false;
+        // Hardcoded
+        Player[] player = new Player[NUM_PLAYERS];
+        player[0] = player1;
+        player[1] = player2;
+        //
+        int i = 0;
+        while(!endGame) {
+            view.printToString(board.toString());   // Print board
+            view.printPlayerInfo(player[i].getName(), player[i].getScore(), 
+                    player[i].getHandTrainC(), player[i].getHandTicketC()); // Print player things
+            
+            performAction(player[i]);
+            
+            endGame = player[i].endOfGame();
+            
+            i++;
+            if(i == NUM_PLAYERS) i = 0;
+        }
+        
+        // Last turns
+        int j = i;
+        do {
+            view.printToString(board.toString());   // Print board
+            view.printPlayerInfo(player[i].getName(), player[i].getScore(), 
+                    player[i].getHandTrainC(), player[i].getHandTicketC()); // Print player things
+            
+            performAction(player[i]);
+            
+            endGame = player[i].endOfGame();
+            
+            j++;
+            if(j == NUM_PLAYERS) j = 0;
+        }while(j != i);
+        
+        //do end game things
     }
     
-    public void performAction() {
-        //loop
-            //draw
-            //claim
-            //draw
-            //checkEndGame
-        
+    public void performAction(Player player) {
+        switch(view.promptAction()) {
+            case 1: drawTrainCards(player);
+                    break;
+            case 2: claimPath(player);
+                    break;
+            case 3: drawTicketCards(player);
+                    break;
+            case 4: break;  // Skip turn
+        }
     }
     
     public void drawTrainCards(Player player) {
@@ -165,14 +204,31 @@ public class Game {
     }
     
     public void claimPath(Player player) {
+        view.promptPath();
+        int i = view.promptCity();
+        int j = view.promptCity();
+        Path claim = board.getPath(i, j);
+        VALUE color = null;
+        switch(view.promptColor(claim.getColor1(), claim.getColor2())) {
+            case 1: color = claim.getColor1();
+                    break;
+            case 2: color = claim.getColor2();
+                    break;
+        }
+        board.claimPath(player, color, i, j);   // Claim path and color for player
         
+        boolean done = false;   // Remove the set of train cards
+        int index = 0;
+        while(!done) {
+            index = view.promptRemoveColor(color, player.getHandTrainC());
+            if(index != -1)
+                player.removeTrainCard(index);
+            else
+                done = true;
+        }
     }
     
     public void drawTicketCards(Player player) {
-        
-    }
-    
-    public void checkEndGame() {
         
     }
     

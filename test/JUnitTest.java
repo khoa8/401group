@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
  *
  * @author Daniel
  */
+
 public class JUnitTest {
     DiscardPile dp = new DiscardPile();
     TicketCard tc = new TicketCard();

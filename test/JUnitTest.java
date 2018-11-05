@@ -7,6 +7,8 @@
 import Model.DiscardPile;
 import Model.TicketCard;
 import Model.TicketCardDeck;
+import Model.TrainCard;
+import static Model.VALUE.RAINBOW;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,7 +25,6 @@ public class JUnitTest {
     TicketCard tc = new TicketCard();
     TicketCardDeck tcd = new TicketCardDeck();
     TrainCard Tc = new TrainCard();
-    TrainCardDeck Tcd = new TrainCardDeck();
     public JUnitTest() {
     }
     
@@ -88,4 +89,3 @@ public class JUnitTest {
     
             
             
-}

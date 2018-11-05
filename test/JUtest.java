@@ -69,8 +69,8 @@ public class JUtest {
         TrainCard card = new TrainCard(VALUE.RAINBOW);
         zone.addCard(card);
         TrainCard picked = zone.pickCard(0);
-        assertEquals(card, picked);
-        assertFalse(zone.getCardArray().contains(card));
+        assertEquals(card.getValue(), picked.getValue());
+        assertFalse(zone.getCardArray().contains(picked));
     }
     
     @Test
@@ -85,11 +85,12 @@ public class JUtest {
         assertFalse(zone.hasThreeRainbows());
     }
     
-    /*@Test
+    @Test
     public void testhasThreeRainbows() {
         zone.addCard(new TrainCard(VALUE.RAINBOW));
         zone.addCard(new TrainCard(VALUE.RAINBOW));
+        zone.addCard(new TrainCard(VALUE.RAINBOW));
         assertTrue(zone.hasThreeRainbows());
-    }*/
+    }
     
 }

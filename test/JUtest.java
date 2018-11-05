@@ -31,7 +31,7 @@ public class JUtest {
     public static void setUpClass() {
         board = new Board();
         zone = new TrainCardZone();
-        player = new Player();
+        player = new Player("new");
         
     }
     

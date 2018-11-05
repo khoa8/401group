@@ -49,7 +49,8 @@ public class Game {
     }
     
     public void setupDeck(TicketCardDeck deck) {
-        
+        deck = new TicketCardDeck();
+        deck.shuffleTicketdeck();
     }
     
     public void setupPlayer(Player player) {
@@ -103,7 +104,7 @@ public class Game {
     }
     
     public void setupDiscard() {
-        
+        discarded.resetDiscardPile();
     }
     
     //##########PLAY############################################################
@@ -169,7 +170,7 @@ public class Game {
     }
     
     public void drawTicketCards(Player player) {
-        
+        player.addTicketCard(ticketDeck.drawTicketCard());
     }
     
     public void checkEndGame() {

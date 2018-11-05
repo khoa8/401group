@@ -248,7 +248,7 @@ public class Game {
     public static void main(String args[]) {
         Game game = new Game();
         boolean keepPlaying = true;
-        while(keepPlaying = true) {
+        while(keepPlaying == true) {
             //game.reset();
             game.initialize();
             game.play();

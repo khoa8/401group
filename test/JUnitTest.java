@@ -19,9 +19,11 @@ import static org.junit.Assert.*;
  * @author Daniel
  */
 public class JUnitTest {
-    //DiscardPile dp;
+    DiscardPile dp = new DiscardPile();
     TicketCard tc = new TicketCard();
     TicketCardDeck tcd = new TicketCardDeck();
+    TrainCard Tc = new TrainCard();
+    TrainCardDeck Tcd = new TrainCardDeck();
     public JUnitTest() {
     }
     
@@ -62,27 +64,25 @@ public class JUnitTest {
         tcd.drawTicketCard();
         assertEquals(false, tcd.Ticketdeck.contains(tc));
     }
-    /*
-    //cant test for DiscardPile.java yet b/c our code aren't merged yet
     @Test
-    public void add1() {
+    public void resetDiscardPiletest() {
         //DiscardPile.java
-        //test if discarded traincard array is empty
-        
+        //test if discard pile is empty
+        Tc = new TrainCard(RAINBOW);
+        dp.discarded.add( Tc);
+        dp.resetDiscardPile();
+        assertEquals(false, dp.discarded.contains(Tc));
     }
     @Test
-    public void remove1() {
-        //DiscardPile.java
-        //test if used train cards in hand are removed
-        
-    }
-    @Test
-    public void remove2() {
+    public void addDiscardPiletest() {
         //DiscardPile.java 
         //test if removed train card is in discard pile 
-        
+        Tc = new TrainCard(RAINBOW);
+        dp.resetDiscardPile();
+        dp.addDiscardPile(Tc);
+        assertEquals(true, dp.discarded.contains(Tc));
     }
-*/
+}
     
     
     

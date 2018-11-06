@@ -217,6 +217,7 @@ public class Game {
                     break;
         }
         board.claimPath(player, color, i, j);   // Claim path and color for player
+        player.addScore(claim.getValue());      // Add score to player
         
         boolean done = false;   // Remove the set of train cards
         int index = 0;

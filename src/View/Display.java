@@ -46,8 +46,10 @@ public class Display {
     public int drawTicketCards(TicketCard tc1,TicketCard tc2,TicketCard tc3){
         if(tc1 != null && tc2 != null && tc3 != null){
         System.out.println("Please choose which ticket cards to keep:");
-        System.out.println("a. "+tc1.toString());
-        System.out.println("b. "+tc2.toString());
+        if (tc1 != null)
+            System.out.println("a. "+tc1.toString());
+        if (tc2 != null)
+            System.out.println("b. "+tc2.toString());
         System.out.println("c. "+tc3.toString());
         if(tc1 != null && tc2 != null && tc3 != null)
             System.out.println("1. All three.");

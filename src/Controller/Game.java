@@ -170,17 +170,26 @@ public class Game {
     }
     
     public void drawTicketCards(Player player) {
+        TicketCard t1 = null;
+        TicketCard t2 = null;
+        TicketCard t3 = null;
+        if(!ticketDeck.Ticketdeck.isEmpty()){
+        t3 = player.getTicketCard(player.getHandTicketCSize()-1);
         player.addTicketCard(ticketDeck.drawTicketCard());
+        }
+        if(!ticketDeck.Ticketdeck.isEmpty()){
+        t2 = player.getTicketCard(player.getHandTicketCSize()-1);
         player.addTicketCard(ticketDeck.drawTicketCard());
+        }
+        if(!ticketDeck.Ticketdeck.isEmpty()){
+        t1 = player.getTicketCard(player.getHandTicketCSize()-1);
         player.addTicketCard(ticketDeck.drawTicketCard());
-        TicketCard t1 = player.getTicketCard(player.getHandTicketCSize()-3);
-        TicketCard t2 = player.getTicketCard(player.getHandTicketCSize()-2);
-        TicketCard t3 = player.getTicketCard(player.getHandTicketCSize()-1);
+        }
         switch(view.drawTicketCards(t1, t2, t3)){
             case 1:
                 break;
             case 2:
-                ticketDeck.addTicketDeck(t3);
+                    ticketDeck.addTicketDeck(t3);
                 player.removeTrainCard(player.getHandTicketCSize()-1);
                 break;
             case 3:
@@ -188,8 +197,10 @@ public class Game {
                 player.removeTrainCard(player.getHandTicketCSize()-2);
                 break;
             case 4:
+                if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
                 player.removeTrainCard(player.getHandTicketCSize()-3);
+                }
                 break;
             case 5:
                 ticketDeck.addTicketDeck(t2);
@@ -198,23 +209,28 @@ public class Game {
                 player.removeTrainCard(player.getHandTicketCSize()-1);
                 break;
             case 6:
+                if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
-                ticketDeck.addTicketDeck(t3);
                 player.removeTrainCard(player.getHandTicketCSize()-3);
+                }
+                ticketDeck.addTicketDeck(t3);
                 player.removeTrainCard(player.getHandTicketCSize()-1);
                 break;
             case 7:
+                if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
+                player.removeTrainCard(player.getHandTicketCSize()-3);
+                }
+                if(t2 != null) {
                 ticketDeck.addTicketDeck(t2);
                 player.removeTrainCard(player.getHandTicketCSize()-2);
-                player.removeTrainCard(player.getHandTicketCSize()-2);
+                }
                 break;
         }
-        
     }
-    
     public void checkEndGame() {
-        
+        player1.endOfGame();
+        player2.endOfGame();
     }
     
     public void calculateWinner() {
@@ -222,7 +238,16 @@ public class Game {
     }
     
     public void calculateScore(Player player) {
-        
+        /* //work in progress
+        for(int i = 0; i < player.getHandTicketCSize()-1; i++){
+        //player.getTicketCard(i).getLocation1();
+        //player.getTicketCard(i).getLocation2();
+        if()
+        player.addScore(player.getTicketCard(i).getValue());
+        else
+        player.subtractScore(player.getTicketCard(i).getValue());
+        }
+        */
     }
     
     //##########RESET###########################################################

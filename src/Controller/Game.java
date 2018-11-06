@@ -171,6 +171,46 @@ public class Game {
     
     public void drawTicketCards(Player player) {
         player.addTicketCard(ticketDeck.drawTicketCard());
+        player.addTicketCard(ticketDeck.drawTicketCard());
+        player.addTicketCard(ticketDeck.drawTicketCard());
+        TicketCard t1 = player.getTicketCard(player.getHandTicketCSize()-3);
+        TicketCard t2 = player.getTicketCard(player.getHandTicketCSize()-2);
+        TicketCard t3 = player.getTicketCard(player.getHandTicketCSize()-1);
+        switch(view.drawTicketCards(t1, t2, t3)){
+            case 1:
+                break;
+            case 2:
+                ticketDeck.addTicketDeck(t3);
+                player.removeTrainCard(player.getHandTicketCSize()-1);
+                break;
+            case 3:
+                ticketDeck.addTicketDeck(t2);
+                player.removeTrainCard(player.getHandTicketCSize()-2);
+                break;
+            case 4:
+                ticketDeck.addTicketDeck(t1);
+                player.removeTrainCard(player.getHandTicketCSize()-3);
+                break;
+            case 5:
+                ticketDeck.addTicketDeck(t2);
+                ticketDeck.addTicketDeck(t3);
+                player.removeTrainCard(player.getHandTicketCSize()-1);
+                player.removeTrainCard(player.getHandTicketCSize()-1);
+                break;
+            case 6:
+                ticketDeck.addTicketDeck(t1);
+                ticketDeck.addTicketDeck(t3);
+                player.removeTrainCard(player.getHandTicketCSize()-3);
+                player.removeTrainCard(player.getHandTicketCSize()-1);
+                break;
+            case 7:
+                ticketDeck.addTicketDeck(t1);
+                ticketDeck.addTicketDeck(t2);
+                player.removeTrainCard(player.getHandTicketCSize()-2);
+                player.removeTrainCard(player.getHandTicketCSize()-2);
+                break;
+        }
+        
     }
     
     public void checkEndGame() {

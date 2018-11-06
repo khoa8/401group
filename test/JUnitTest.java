@@ -9,6 +9,7 @@ import Model.TicketCard;
 import Model.TicketCardDeck;
 import Model.TrainCard;
 import static Model.VALUE.RAINBOW;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -65,6 +66,24 @@ public class JUnitTest {
         tcd.Ticketdeck.set(0, tc);
         tcd.drawTicketCard();
         assertEquals(false, tcd.Ticketdeck.contains(tc));
+    }
+    @Test
+    public void shuffleTicketdecktest() {
+        //TicketCardDeck.java 
+        //shuffle Ticketdeck test
+        //might fail sometimes bacause Ticketdeck could be shuffled but have same top card
+        tcd.Ticketdeck = new ArrayList();
+        tc = new TicketCard(4,5,7);
+        tcd.Ticketdeck.add(0, tc);
+        tc = new TicketCard(4,5,6);
+        tcd.Ticketdeck.add(1, tc);
+        tc = new TicketCard(4,5,5);
+        tcd.Ticketdeck.add(2, tc);
+        tc = new TicketCard(4,5,4);
+        tcd.Ticketdeck.add(3, tc);
+        tc = new TicketCard(4,5,7);
+        tcd.drawTicketCard();
+        assertFalse(tc == tcd.Ticketdeck.get(0));
     }
     @Test
     public void resetDiscardPiletest() {

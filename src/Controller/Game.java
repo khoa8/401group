@@ -229,8 +229,7 @@ public class Game {
         }
     }
     public void checkEndGame() {
-        player1.endOfGame();
-        player2.endOfGame();
+
     }
     
     public void calculateWinner() {

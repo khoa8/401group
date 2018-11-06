@@ -31,10 +31,10 @@ public class Path {
     @Override
     public String toString() { 
         String s = "Path(" + loc1 + "," + loc2 + ") , Length(" + length + ")\n";
-        s += color1 + " claimed by " + (claim1 == null ? "nobody" : claim1.toString());
+        s += color1 + " claimed by " + (claim1 == null ? "nobody" : claim1.getName());
         s += "\n";
         if(numPaths == 2) {
-            s += color2 + " claimed by " + (claim2 == null ? "nobody" : claim2.toString());
+            s += color2 + " claimed by " + (claim2 == null ? "nobody" : claim2.getName());
             s += "\n";
         }
         return s;

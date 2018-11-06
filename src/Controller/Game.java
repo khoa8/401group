@@ -118,8 +118,8 @@ public class Game {
         int i = 0;
         while(!endGame) {
             view.printToString(board.toString());   // Print board
-            view.printPlayerInfo(players[i].getName(), players[i].getScore(), 
-                    players[i].getHandTrainC(), players[i].getHandTicketC()); // Print player things
+            view.printToString(players[i].toString());  // Print player
+            view.printToString(zone.toString());    // Print card zone
             
             performAction(players[i]);
             
@@ -133,8 +133,8 @@ public class Game {
         int j = i;
         do {
             view.printToString(board.toString());   // Print board
-            view.printPlayerInfo(players[i].getName(), players[i].getScore(), 
-                    players[i].getHandTrainC(), players[i].getHandTicketC()); // Print player things
+            view.printToString(players[i].toString());  // Print player
+            view.printToString(zone.toString());    // Print card zone
             
             performAction(players[i]);
             
@@ -144,7 +144,7 @@ public class Game {
             if(j == NUM_PLAYERS) j = 0;
         }while(j != i);
         
-        //do end game things
+        calculateWinner();
     }
     
     public void performAction(Player player) {
@@ -259,6 +259,8 @@ public class Game {
         for(TicketCard card : player.getHandTicketC()) {
             if(board.checkTicket(player, card))
                 score += card.getValue();
+            else
+                score -= card.getValue();
         }
         return score;
     }

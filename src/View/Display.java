@@ -49,20 +49,6 @@ public class Display {
         System.out.println(s);
     }
     
-    public void printPlayerInfo(String name, int score, List<TrainCard> hand1, List<TicketCard> hand2) {
-        System.out.println(name + "'s turn!");
-        System.out.println("Score: " + score);
-        System.out.print("Train cards in hand:\n{");
-        for(TrainCard card : hand1) {
-            System.out.print(card.getValue());
-        }
-        System.out.print("}\nTicket cards in hand:\n{");
-        for(TrainCard card : hand1) {
-            System.out.print(card.getValue());
-        }
-        System.out.println("}");
-    }
-    
     public int promptAction() {
         System.out.println("Choose which action to take:");
         System.out.println("1. Draw train cards");

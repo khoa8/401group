@@ -52,4 +52,16 @@ public class TrainCardZone {
         return rainbows >= 3;
     }
     
+    @Override
+    public String toString() {
+        String s = "Zone: {";
+        for(int i = 0; i < zone.size(); i++) {
+            s += zone.get(i);
+            if(i < zone.size() - 1) {
+                s += ", ";
+            }
+        }
+        s += "}\n";
+        return s;
+    }
 }

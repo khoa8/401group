@@ -43,4 +43,18 @@ public class Display {
         System.out.println("Please pick the index to draw:");
         return stdin.nextInt();
     }
+    public int drawTicketCards(TicketCard tc1,TicketCard tc2,TicketCard tc3){
+        System.out.println("Please choose which ticket cards to keep:");
+        System.out.println("a. "+tc1.toString());
+        System.out.println("b. "+tc2.toString());
+        System.out.println("c. "+tc3.toString());
+        System.out.println("1. All three.");
+        System.out.println("2. a + b");
+        System.out.println("3. a + c");
+        System.out.println("4. b + c");
+        System.out.println("5. a");
+        System.out.println("6. b");
+        System.out.println("7. c");
+        return stdin.nextInt();
+    }
 }

@@ -238,16 +238,7 @@ public class Game {
     }
     
     public void calculateScore(Player player) {
-        /* //work in progress
-        for(int i = 0; i < player.getHandTicketCSize()-1; i++){
-        //player.getTicketCard(i).getLocation1();
-        //player.getTicketCard(i).getLocation2();
-        if()
-        player.addScore(player.getTicketCard(i).getValue());
-        else
-        player.subtractScore(player.getTicketCard(i).getValue());
-        }
-        */
+
     }
     
     //##########RESET###########################################################

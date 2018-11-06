@@ -59,10 +59,10 @@ public class Game {
         name = view.PlayerName();
         player = new Player(name);
         // deal a starting hand of 4 train cards 
-        player.addTrainCard(trainDeck.draw());
-        player.addTrainCard(trainDeck.draw());
-        player.addTrainCard(trainDeck.draw());
-        player.addTrainCard(trainDeck.draw());
+        if (trainDeck.draw() != null) player.addTrainCard(trainDeck.draw());
+        if (trainDeck.draw() != null) player.addTrainCard(trainDeck.draw());
+        if (trainDeck.draw() != null) player.addTrainCard(trainDeck.draw());
+        if (trainDeck.draw() != null) player.addTrainCard(trainDeck.draw());
         
         //deal 3 cards to each player.Each player decides which ones they wish to keep,
         //must keep at least two, but may keep all three. Any returned cards are

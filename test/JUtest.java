@@ -58,19 +58,16 @@ public class JUtest {
     public void testisTherePathFalse() {
         assertFalse(board.hasPath(0, 0));
     }
-  
-    @Test  
-    public void testisPathClaimed() {
-        assertFalse(board.getPath(0, 1).isClaimedBy(player));
-    }
     
     @Test
-    public void testpickCard() {
-        TrainCard card = new TrainCard(VALUE.RAINBOW);
-        zone.addCard(card);
-        TrainCard picked = zone.pickCard(0);
-        assertEquals(card.getValue(), picked.getValue());
-        assertFalse(zone.getCardArray().contains(picked));
+    public void testisPathClaimed() {
+        board.claimPath(player, VALUE.RAINBOW, 0, 1);
+        assertTrue(board.getPath(0, 1).isClaimedBy(player));
+    }
+    
+    @Test  
+    public void testisPathClaimedFalse() {
+        assertFalse(board.getPath(0, 2).isClaimedBy(player));
     }
     
     @Test
@@ -78,6 +75,12 @@ public class JUtest {
         TrainCard card = new TrainCard(VALUE.RAINBOW);
         zone.addCard(card);
         assertTrue(zone.getCardArray().contains(card));
+    }
+    
+    @Test
+    public void testpickCard() {
+        TrainCard picked = zone.pickCard(0);
+        assertFalse(zone.getCardArray().contains(picked));
     }
     
     @Test
@@ -91,6 +94,21 @@ public class JUtest {
         zone.addCard(new TrainCard(VALUE.RAINBOW));
         zone.addCard(new TrainCard(VALUE.RAINBOW));
         assertTrue(zone.hasThreeRainbows());
+    }
+    
+    @Test
+    public void testcheckTicket() {
+        board.claimPath(player, VALUE.RAINBOW, 0, 1);
+        board.claimPath(player, VALUE.RAINBOW, 1, 4);
+        board.claimPath(player, VALUE.RAINBOW, 3, 4);
+        TicketCard card = new TicketCard(0, 1, 1);
+        assertTrue(board.checkTicket(player, card));
+        card = new TicketCard(1, 4, 1);
+        assertTrue(board.checkTicket(player, card));
+        card = new TicketCard(0, 4, 1);
+        assertTrue(board.checkTicket(player, card));
+        card = new TicketCard(0, 3, 1);
+        assertTrue(board.checkTicket(player, card));
     }
     
 }

@@ -168,7 +168,7 @@ public class Board {
                     found = checkRoute(player, n, j);
             }
         }
-        return false; //return found;
+        return found;
     }
     
 }

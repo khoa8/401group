@@ -84,7 +84,9 @@ public class Board {
         ArrayList<Integer> temp = new ArrayList<>();
         temp.add(j);
         temp = longestHelper(player, i, temp);
-        if(temp.get(0) == j) {  // longest has a loop j, ..., i, j
+        if(isClaimedBy(player, temp.get(0), j))
+            temp.add(0, j);
+        if(temp.get(0) == j) {
             System.out.println(temp);
             return calculateLength(temp);
         }

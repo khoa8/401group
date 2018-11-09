@@ -237,40 +237,40 @@ public class Game {
                 break;
             case 2:
                     ticketDeck.addTicketDeck(t3);
-                player.removeTrainCard(player.getHandTicketCSize()-1);
+                player.removeTicketCard(player.getHandTicketCSize()-1);
                 break;
             case 3:
                 ticketDeck.addTicketDeck(t2);
-                player.removeTrainCard(player.getHandTicketCSize()-2);
+                player.removeTicketCard(player.getHandTicketCSize()-2);
                 break;
             case 4:
                 if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
-                player.removeTrainCard(player.getHandTicketCSize()-3);
+                player.removeTicketCard(player.getHandTicketCSize()-3);
                 }
                 break;
             case 5:
                 ticketDeck.addTicketDeck(t2);
                 ticketDeck.addTicketDeck(t3);
-                player.removeTrainCard(player.getHandTicketCSize()-1);
-                player.removeTrainCard(player.getHandTicketCSize()-1);
+                player.removeTicketCard(player.getHandTicketCSize()-1);
+                player.removeTicketCard(player.getHandTicketCSize()-1);               
                 break;
             case 6:
                 if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
-                player.removeTrainCard(player.getHandTicketCSize()-3);
+                player.removeTicketCard(player.getHandTicketCSize()-3);
                 }
                 ticketDeck.addTicketDeck(t3);
-                player.removeTrainCard(player.getHandTicketCSize()-1);
+                player.removeTicketCard(player.getHandTicketCSize()-1);
                 break;
             case 7:
                 if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
-                player.removeTrainCard(player.getHandTicketCSize()-3);
+                player.removeTicketCard(player.getHandTicketCSize()-3);
                 }
                 if(t2 != null) {
                 ticketDeck.addTicketDeck(t2);
-                player.removeTrainCard(player.getHandTicketCSize()-2);
+                player.removeTicketCard(player.getHandTicketCSize()-2);
                 }
                 break;
         }

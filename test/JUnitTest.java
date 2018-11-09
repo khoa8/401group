@@ -8,6 +8,7 @@ import Model.DiscardPile;
 import Model.TicketCard;
 import Model.TicketCardDeck;
 import Model.TrainCard;
+import Model.TrainCardDeck;
 import static Model.VALUE.RAINBOW;
 import java.util.ArrayList;
 import org.junit.After;
@@ -27,29 +28,8 @@ public class JUnitTest {
     TicketCard tc = new TicketCard();
     TicketCardDeck tcd = new TicketCardDeck();
     TrainCard Tc = new TrainCard();
-    public JUnitTest() {
-    }
+    TrainCardDeck Tcd = new TrainCardDeck();
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-        
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-
     @Test
     public void addTicketDecktest() {
         //TicketCardDeck.java 
@@ -102,6 +82,17 @@ public class JUnitTest {
         dp.resetDiscardPile();
         dp.addDiscardPile(Tc);
         assertEquals(true, dp.discarded.contains(Tc));
+    }
+    public void addDiscardPileToTrainDecktest() {
+        //test if discardpile is empty and cards passed to train card deck
+        Tc = new TrainCard(RAINBOW);
+        Tcd = new TrainCardDeck();
+        Tcd.cardDeck = new ArrayList();
+        dp.addDiscardPile(Tc);
+        dp.addDiscardPile(Tc);
+        dp.addDiscardPileToTrainDeck(Tcd);
+        assertEquals(false, dp.discarded.contains(Tc));
+        assertEquals(true, Tcd.cardDeck.contains(Tc));
     }
 }
     

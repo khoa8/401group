@@ -61,7 +61,7 @@ public class Display {
     }
     
     public void promptPath() {
-        System.out.print("Choose which path to claim: ");
+        System.out.println("Choose which path to claim: ");
     }
     
     public int promptCity() {
@@ -71,7 +71,7 @@ public class Display {
     
     public int promptColor(VALUE value1, VALUE value2) {
         System.out.println("1. " + value1);
-        System.out.println("1. " + value2);
+        System.out.println("2. " + value2);
         System.out.print("Choose color: ");
         return stdin.nextInt();
     }
@@ -139,6 +139,9 @@ public class Display {
             return 1;
         }
     }
-   
+    
+    public void printEndGame() {
+        System.out.println("Everyone's last turn !");
+    }
 }
 

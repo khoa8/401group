@@ -90,7 +90,7 @@ public class Player {
     @Override
     public String toString() {
         return "Player: " + name + "\n" +
-                "Score: " + score + "\n" +
+                "Score: " + score + "\t" + "Trains: " + trains + "\n" +
                 "handTrainCard= " + handTrainC + 
                 "\nhandTicketCard= " + handTicketC;
     }
@@ -115,8 +115,8 @@ public class Player {
         return trains < 3;
     }
     
-    public void setTrains(int num){
-        this.trains = num;
+    public void subtractTrains(int num){
+        this.trains -= num;
     }
     
     public int getScore(){

@@ -32,9 +32,13 @@ public class Game {
     //##########INITIALIZE######################################################
     public void initialize() {
         setupBoard();
-        setupDeck(trainDeck);
-        setupDeck(ticketDeck);
+        trainDeck = new TrainCardDeck();
+        trainDeck.shuffle();
+        ticketDeck = new TicketCardDeck();
+        ticketDeck.shuffleTicketdeck();
+        player1 = new Player(view.PlayerName());
         setupPlayer(player1);
+        player2 = new Player(view.PlayerName());
         setupPlayer(player2);
         setupZone();
         setupDiscard();
@@ -44,21 +48,8 @@ public class Game {
         board = new Board();    // hard coded
     }
     
-    public void setupDeck(TrainCardDeck deck) {
-        deck = new TrainCardDeck();
-        deck.shuffle();
-    }
-    
-    public void setupDeck(TicketCardDeck deck) {
-        deck = new TicketCardDeck();
-        deck.shuffleTicketdeck();
-    }
-    
     public void setupPlayer(Player player) {
         //pdf step 2 & step 5
-        String name;
-        name = view.PlayerName();
-        player = new Player(name);
         // deal a starting hand of 4 train cards 
         player.addTrainCard(trainDeck.draw());
         player.addTrainCard(trainDeck.draw());

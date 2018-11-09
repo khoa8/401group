@@ -125,6 +125,7 @@ public class Game {
         int j = i;
         do {
             view.printToString(board.toString());   // Print board
+            view.printEndGame();
             view.printToString(players[i].toString());  // Print player
             view.printToString(zone.toString());    // Print card zone
             
@@ -213,6 +214,7 @@ public class Game {
         }
         board.claimPath(player, color, i, j);   // Claim path and color for player
         player.addScore(claim.getValue());      // Add score to player
+        player.subtractTrains(claim.getLength());   // Subtract trains
         
         boolean done = false;   // Remove the set of train cards
         int index = 0;

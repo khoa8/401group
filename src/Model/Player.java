@@ -37,7 +37,7 @@ public class Player {
         //train.addAll(Arrays.asList(CAR.values()));
         this.name = name; 
         score = 0;
-        trains = 45;
+        trains = 6;
     }
     
     public List<TrainCard> getHandTrainC(){

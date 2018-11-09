@@ -153,10 +153,13 @@ public class Game {
     
     public void drawTrainCards(Player player) {
         view.trainCardZone(zone);
+        view.printToString(player.showHandTrainCard());
         switch(view.drawTrainCard()){
             case 1: player.addTrainCard(trainDeck.draw());
+                    view.printToString(player.showHandTrainCard());
                     switch(view.drawTrainCard()){
                         case 1: player.addTrainCard(trainDeck.draw());
+                                view.printToString(player.showHandTrainCard());
                                 break;
                         case 2: player.addTrainCard(zone.pickCard(view.drawTrainCardfromZone(zone)));
                                 zone.addCard(trainDeck.draw());
@@ -166,33 +169,34 @@ public class Game {
                     break;
             case 2: TrainCard card1 = zone.pickCard(view.drawTrainCardfromZone(zone));
                     player.addTrainCard(card1);
+                    view.printToString(player.showHandTrainCard());
                     zone.addCard(trainDeck.draw());
                     if (zone.hasThreeRainbows()) setupZone();
                     if (card1.getValue() == VALUE.RAINBOW) break;
                     else{
                         switch(view.drawTrainCard()){
                         case 1: player.addTrainCard(trainDeck.draw());
+                                view.printToString(player.showHandTrainCard());
                                 break;
                         case 2: TrainCard card2 = zone.pickCard(view.drawTrainCardfromZone(zone));
                                 if (card2.getValue() != VALUE.RAINBOW) player.addTrainCard(card2);
                                 else {
                                     do {
+                                        view.printToString(zone.errorRainBow());
                                         zone.addCard(card2);
                                         card2 = zone.pickCard(view.drawTrainCardfromZone(zone));
                                         if (card2.getValue() != VALUE.RAINBOW) player.addTrainCard(card2);
                                     }
                                     while (card2.getValue() == VALUE.RAINBOW);
                                 }
+                                view.printToString(player.showHandTrainCard());
                                 zone.addCard(trainDeck.draw());
                                 if (zone.hasThreeRainbows()) setupZone();
-                                
                                 break;
                     }
                     }
                     break;        
         }
-        TrainCard nextTrainCard = trainDeck.draw();
-        if (nextTrainCard != null) player.addTrainCard(nextTrainCard);
     }
     
     public void claimPath(Player player) {

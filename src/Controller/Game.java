@@ -288,6 +288,7 @@ public class Game {
         int[] scores = new int[NUM_PLAYERS];
         for(int i = 0; i < NUM_PLAYERS; i++) {
             scores[i] = calculateScore(players[i]);
+            players[i].setScore(scores[i]);
             if(scores[i] > highestScore) {
                 highestScore = scores[i];
                 winner = players[i];

@@ -85,19 +85,9 @@ public class Board {
         temp.add(j);
         temp = longestHelper(player, i, temp);
         if(temp.get(0) == j) {  // longest has a loop j, ..., i, j
-            temp = reverseVisited(temp);    // j, i, ..., j
-            temp.remove((Integer) j); // remove first j (beginning), so longestHelper will add it again
-            temp.remove((Integer) j); // remove first j (endding) of loop, so longestHelper will work
-            temp = longestHelper(player, j, temp);
-            temp.add(temp.size(), j);   // add back the last j
+            System.out.println(temp);
             return calculateLength(temp);
         }
-        temp = reverseVisited(temp);    // j, i, ...
-        System.out.println(temp);
-        temp.remove((Integer) j); // remove first j (beginning), so longestHelper will add it again
-        System.out.println(temp);
-        temp = longestHelper(player, j, temp);
-        temp.add(temp.size(), j);   // add back the last j
         System.out.println(temp);
         return calculateLength(temp);
     }
@@ -106,8 +96,8 @@ public class Board {
     public ArrayList<Integer> longestHelper(Player player, int i, ArrayList<Integer> v) {
         ArrayList<Integer> biggest = v; // list of visited cities
         ArrayList<Integer> tempV = null;
-        if(!v.contains(i)) {
-            v.add(0, i);    // adds to front of visited
+        if(!v.contains(i)) {    // if i not visited
+            v.add(0, i);    // adds i to visited
             for(int n = 0; n < NUM_CITIES; n++) {
                 if(isClaimedBy(player, i, n)) {
                     tempV = longestHelper(player, n, new ArrayList<>(v));
@@ -118,8 +108,9 @@ public class Board {
             }
             return biggest;
         }
-        else// if i visited
+        else {  // if i visited
             return v;
+        }
     }
     
     //sum of paths to visited cities 

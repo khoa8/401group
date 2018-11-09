@@ -108,34 +108,23 @@ public class Game {
         players[1] = player2;
         //
         int i = 0;
-        while(!endGame) {
+        int endTurns = NUM_PLAYERS;
+        while(!endGame || endTurns > 0) {
             view.printToString(board.toString());   // Print board
+            if(endGame) {   //
+                endTurns--;
+                view.printEndGame();
+            }
             view.printToString(players[i].toString());  // Print player
             view.printToString(zone.toString());    // Print card zone
             
             performAction(players[i]);
             
-            endGame = players[i].endOfGame();
+            endGame = endGame || players[i].endOfGame();
             
             i++;
             if(i == NUM_PLAYERS) i = 0;
         }
-        
-        // Last turns
-        int j = i;
-        do {
-            view.printToString(board.toString());   // Print board
-            view.printEndGame();
-            view.printToString(players[i].toString());  // Print player
-            view.printToString(zone.toString());    // Print card zone
-            
-            performAction(players[i]);
-            
-            endGame = players[i].endOfGame();
-            
-            j++;
-            if(j == NUM_PLAYERS) j = 0;
-        }while(j != i);
         
         calculateWinner();
     }
@@ -214,7 +203,7 @@ public class Game {
         }
         board.claimPath(player, color, i, j);   // Claim path and color for player
         player.addScore(claim.getValue());      // Add score to player
-        player.subtractTrains(claim.getLength());   // Subtract trains
+        player.subtractTrains(claim.getLength());   // Subtract trainsasdf
         
         boolean done = false;   // Remove the set of train cards
         int index = 0;

@@ -104,6 +104,10 @@ public class Player {
         this.score += score; 
     }
     
+    public void setScore(int score) {
+        this.score = score;
+    }
+    
     //method to subtract score if not finishing missions when game ends
     public void subtractScore(int score){
         this.score -= score;

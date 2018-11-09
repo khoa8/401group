@@ -57,6 +57,7 @@ public class JUtest {
     @Test   
     public void testisTherePathFalse() {
         assertFalse(board.hasPath(0, 0));
+        assertFalse(board.hasPath(0, 4));
     }
     
     @Test
@@ -75,6 +76,12 @@ public class JUtest {
         TrainCard card = new TrainCard(VALUE.RAINBOW);
         zone.addCard(card);
         assertTrue(zone.getCardArray().contains(card));
+        
+        int size = zone.getSize();
+        card = new TrainCard(VALUE.RAINBOW);
+        zone.addCard(card);
+        assertTrue(zone.getSize() > size);
+        
     }
     
     @Test
@@ -86,12 +93,14 @@ public class JUtest {
     @Test
     public void testhasThreeRainbowsFalse() {
         assertFalse(zone.hasThreeRainbows());
+        zone.addCard(new TrainCard(VALUE.RAINBOW));
+        assertFalse(zone.hasThreeRainbows());
+        zone.addCard(new TrainCard(VALUE.RAINBOW));
+        assertFalse(zone.hasThreeRainbows());
     }
     
     @Test
     public void testhasThreeRainbows() {
-        zone.addCard(new TrainCard(VALUE.RAINBOW));
-        zone.addCard(new TrainCard(VALUE.RAINBOW));
         zone.addCard(new TrainCard(VALUE.RAINBOW));
         assertTrue(zone.hasThreeRainbows());
     }
@@ -109,6 +118,18 @@ public class JUtest {
         assertTrue(board.checkTicket(player, card));
         card = new TicketCard(0, 3, 1);
         assertTrue(board.checkTicket(player, card));
+    }
+    
+    @Test
+    public void testcheckTicketFalse() {
+        TicketCard card = new TicketCard(0, 2, 1);
+        assertFalse(board.checkTicket(player, card));
+    }
+    
+    @Test
+    public void testlongest() {
+        int n = board.longest(player, 1, 4, 0);
+        assertEquals(15, n);
     }
     
 }

@@ -96,7 +96,7 @@ public class Game {
     }
     
     public void setupDiscard() {
-        discarded.resetDiscardPile();
+        discarded = new DiscardPile();
     }
     
     //##########PLAY############################################################

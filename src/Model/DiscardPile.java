@@ -24,6 +24,12 @@ public class DiscardPile {
         //move train card from hand to discard pile;
             discarded.add(discard);     
     }
+    public void addDiscardPileToTrainDeck(TrainCardDeck tcd) {
+        //move train card from discard pile to TrainCardDeck and shuffle deck
+        for(TrainCard tc : discarded)
+            tcd.cardDeck.add(tc);
+        tcd.shuffle();
+    }
     public TrainCard getDiscardPile() {
         //get discardpile
         return (TrainCard) discarded;

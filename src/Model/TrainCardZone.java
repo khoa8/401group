@@ -51,10 +51,12 @@ public class TrainCardZone {
         }
         return rainbows >= 3;
     }
-    
+    public String errorRainBow(){
+        return "Cannot pick RAINBOW this time, please pick another one.";
+    }
     @Override
     public String toString() {
-        String s = "Zone: {";
+        String s = "Zone (available face-up cards on the board): {";
         for(int i = 0; i < zone.size(); i++) {
             s += zone.get(i);
             if(i < zone.size() - 1) {

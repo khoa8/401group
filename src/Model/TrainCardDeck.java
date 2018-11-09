@@ -11,12 +11,12 @@ import static Model.VALUE.RAINBOW;
  */
 public class TrainCardDeck{
     
-    public static List<TrainCard> cardDeck;
+    List<TrainCard> cardDeck;
     
     //initialize and create the deck of train card
     
     public TrainCardDeck(){
-        cardDeck = new ArrayList<>();
+        this.cardDeck = new ArrayList<>();
         
     //110 Train Car cards (12 each of Box-PINK, Passenger-WHITE, Tanker-BLUE, Reefer-YELLOW, 
     //Freight-ORANGE, Hopper-BLACK, Coal-RED, Caboose-GREEN, plus 14 Locomotives-RAINBOW)
@@ -44,9 +44,9 @@ public class TrainCardDeck{
     
     //method to draw the card from deck
     public TrainCard draw(){
-        if (cardDeck.size() > 0)
-            return cardDeck.remove(0);
-        return null;
+            TrainCard card = cardDeck.get(0);
+            cardDeck.remove(0);
+            return card;
     }
     
     public void dealCard(Player player){

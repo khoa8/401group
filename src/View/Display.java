@@ -23,7 +23,7 @@ public class Display {
         System.out.println("a. "+tc1.toString());
         System.out.println("b. "+tc2.toString());
         System.out.println("c. "+tc3.toString());
-        System.out.println("Please choose to keep:");
+        System.out.println("Please choose to keep Ticket Cards:");
         System.out.println("1. All three.");
         System.out.println("2. a + b");
         System.out.println("3. a + c");
@@ -31,17 +31,18 @@ public class Display {
         return stdin.nextInt();
     }
     public void trainCardZone(TrainCardZone tcz){
+        System.out.println("Zone (available face-up cards on the board):");
         System.out.println(tcz.getCardArray());
     }
     public int drawTrainCard(){
-        System.out.println("Please choose to draw:");
+        System.out.println("Please choose to draw Train Cards:");
         System.out.println("1. Blind draw.");
         System.out.println("2. Face-up card draw.");
         return stdin.nextInt();
     }
     public int drawTrainCardfromZone(TrainCardZone tcz){
-        System.out.println(tcz.getCardArray());
-        System.out.println("Please pick the index to draw:");
+        System.out.println("Zone: " + tcz.getCardArray());
+        System.out.println("Please pick the index (from 0 to 4) to draw Train Card from Zone:");
         return stdin.nextInt();
     }
     

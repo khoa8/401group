@@ -23,8 +23,8 @@ public class Player {
     private int score;
     private final String name;
     private int trains; //number of train cars;
-    private final List<TrainCard> handTrainC;
-    private final List<TicketCard> handTicketC;
+    List<TrainCard> handTrainC;
+    List<TicketCard> handTicketC;
     //private static final List<CAR> train = new ArrayList<>();
     //private static final int SIZE = train.size();
     //private static final Random rand = new Random();
@@ -91,10 +91,14 @@ public class Player {
     public String toString() {
         return "Player: " + name + "\n" +
                 "Score: " + score + "\n" +
-                "handTrainCard= " + handTrainC +
-                "handTicketCard= " + handTicketC +" }";
+                "handTrainCard= " + handTrainC + 
+                "\nhandTicketCard= " + handTicketC;
     }
    
+    public String showHandTrainCard(){
+        return "\nPlayer's handTrainCard= " + handTrainC;
+    }
+    
     //method to add score
     public void addScore(int score){
         this.score += score; 

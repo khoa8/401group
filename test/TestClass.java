@@ -31,7 +31,7 @@ public class TestClass {
     @Before
     public void setUp() {
         deck = new TrainCardDeck();
-        player = new Player();
+        player = new Player("A");
     }
 
     @Test

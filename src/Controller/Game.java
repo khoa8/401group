@@ -95,7 +95,7 @@ public class Game {
         }while(zone.hasThreeRainbows());
     }
     
-    public void setupDiscard() {
+    public void setupDiscard() {    //initialize discardpile class
         discarded = new DiscardPile();
     }
     
@@ -217,45 +217,45 @@ public class Game {
     }
     
     public void drawTicketCards(Player player) {
-        TicketCard t1 = null;
-        TicketCard t2 = null;
+        TicketCard t1 = null;   //ticket cards 
+        TicketCard t2 = null;   //t1 is a, t2 is b, t3 is c
         TicketCard t3 = null;
-        if(!ticketDeck.Ticketdeck.isEmpty()){
+        if(!ticketDeck.Ticketdeck.isEmpty()){   //add ticket card to hand if ticket deck isn't empty
         t3 = player.getTicketCard(player.getHandTicketCSize()-1);
         player.addTicketCard(ticketDeck.drawTicketCard());
         }
-        if(!ticketDeck.Ticketdeck.isEmpty()){
+        if(!ticketDeck.Ticketdeck.isEmpty()){   //add ticket card to hand if ticket deck isn't empty
         t2 = player.getTicketCard(player.getHandTicketCSize()-1);
         player.addTicketCard(ticketDeck.drawTicketCard());
         }
-        if(!ticketDeck.Ticketdeck.isEmpty()){
+        if(!ticketDeck.Ticketdeck.isEmpty()){   //add ticket card to hand if ticket deck isn't empty
         t1 = player.getTicketCard(player.getHandTicketCSize()-1);
         player.addTicketCard(ticketDeck.drawTicketCard());
         }
         switch(view.drawTicketCards(t1, t2, t3)){
-            case 1:
+            case 1: //keep ticketcard 1. All three
                 break;
-            case 2:
+            case 2: //keep ticketcard 2. a + b      and remove c
                     ticketDeck.addTicketDeck(t3);
                 player.removeTicketCard(player.getHandTicketCSize()-1);
                 break;
-            case 3:
+            case 3: //keep ticketcard 3. a + c      and remove b
                 ticketDeck.addTicketDeck(t2);
                 player.removeTicketCard(player.getHandTicketCSize()-2);
                 break;
-            case 4:
+            case 4: //keep ticketcard 4. b + c      and remove a if it isn't null
                 if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
                 player.removeTicketCard(player.getHandTicketCSize()-3);
                 }
                 break;
-            case 5:
+            case 5: //keep ticketcard 5. a      and remove b + c  if they aren't null
                 ticketDeck.addTicketDeck(t2);
                 ticketDeck.addTicketDeck(t3);
                 player.removeTicketCard(player.getHandTicketCSize()-1);
                 player.removeTicketCard(player.getHandTicketCSize()-1);               
                 break;
-            case 6:
+            case 6: //keep ticketcard 6. b      and remove a + c if they aren't null
                 if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
                 player.removeTicketCard(player.getHandTicketCSize()-3);
@@ -263,7 +263,7 @@ public class Game {
                 ticketDeck.addTicketDeck(t3);
                 player.removeTicketCard(player.getHandTicketCSize()-1);
                 break;
-            case 7:
+            case 7: //keep ticketcard 7. c      and remove a + b if they aren't null
                 if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
                 player.removeTicketCard(player.getHandTicketCSize()-3);

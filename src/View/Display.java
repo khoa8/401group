@@ -112,14 +112,14 @@ public class Display {
         System.out.println("The winner is " + player + "!");
     }
     public int drawTicketCards(TicketCard tc1,TicketCard tc2,TicketCard tc3){
-        if(tc1 != null || tc2 != null || tc3 != null){
+        if(tc1 != null || tc2 != null || tc3 != null){    //prevent printing if all are null
         System.out.println("Please choose which ticket cards to keep:");
-        if (tc1 != null)
+        if (tc1 != null)    //prevent null ticketcards from printing
             System.out.println("a. "+tc1.toString());
         if (tc2 != null)
             System.out.println("b. "+tc2.toString());
         System.out.println("c. "+tc3.toString());
-        if(tc1 != null && tc2 != null)
+        if(tc1 != null && tc2 != null)  //prevent showing options that result in keeping null
             System.out.println("1. All three.");
         if(tc1 != null && tc2 != null)
             System.out.println("2. a + b");
@@ -134,7 +134,7 @@ public class Display {
         System.out.println("7. c");
         return stdin.nextInt();
     }
-        else{
+        else{   //ticket card deck is empty
             System.out.println("Failed to draw ticket cards. Ticket deck is empty");
             return 1;
         }

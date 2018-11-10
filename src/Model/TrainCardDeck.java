@@ -11,7 +11,7 @@ import static Model.VALUE.RAINBOW;
  */
 public class TrainCardDeck{
     
-    List<TrainCard> cardDeck;
+    public List<TrainCard> cardDeck;
     
     //initialize and create the deck of train card
     

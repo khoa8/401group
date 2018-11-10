@@ -126,5 +126,9 @@ public class Player {
     public int getScore(){
         return score;
     }
+
+    public void setTrains(int i) {
+        this.trains = i;
+    }
      
 }

@@ -108,6 +108,8 @@ public class Game {
         players[1] = player2;
         //
         int i = 0;
+        int pay = 0;    //daniel
+        pay = view.protectionMoney(pay);    //daniel
         int endTurns = NUM_PLAYERS;
         while(!endGame || endTurns > 0) {
             view.printToString(board.toString());   // Print board
@@ -117,6 +119,8 @@ public class Game {
             }
             view.printToString(players[i].toString());  // Print player
             view.printToString(zone.toString());    // Print card zone
+            
+            protectionMoney(players[i], pay);    //daniel
             
             performAction(players[i]);
             
@@ -275,7 +279,51 @@ public class Game {
                 break;
         }
     }
-    
+    public void protectionMoney(Player player, int pay) {   //daniel
+        int take;
+        if(pay == -1){
+        //-1 for if players choose to not play with this game rule    
+        }
+        else{
+        //ask if player wants to pay protection money
+        pay = view.protectionMoney(pay);
+        if(pay == 1){
+        //pay protection money (1 train card)
+            take = (int) (Math.random() * 100) % player.getHandTrainCSize();
+            player.removeTrainCard(take);
+        }
+        else if(pay == 2){
+        //refuse to pay protection money
+        //1 - 6 random roll for possible sabotage
+        // 1,2,3 nothing happens
+        pay = (int) ((Math.random() * 100) % 6) + 1;
+            if(pay == 4){
+                player.subtractTrains(10);
+            }
+            if(pay == 5){
+                if(player.getHandTrainCSize() != 0){
+                    take = (int) (Math.random() * 100) % player.getHandTrainCSize();
+                    player.removeTrainCard(take);
+                }
+                if(player.getHandTrainCSize() != 0){
+                    take = (int) (Math.random() * 100) % player.getHandTrainCSize();
+                    player.removeTrainCard(take);
+                }
+            }
+            if(pay == 6){
+                if(player.getHandTicketCSize() != 0){
+                    take = (int) (Math.random() * 100) % player.getHandTicketCSize();
+                    player.removeTicketCard(take);
+                }
+                if(player.getHandTicketCSize() != 0){
+                    take = (int) (Math.random() * 100) % player.getHandTicketCSize();
+                    player.removeTicketCard(take);
+                }
+            }
+        }
+        view.printToString(player.toString());
+        }
+    }
     public void calculateWinner() {
         Player winner = null;
         int highestScore = 0;

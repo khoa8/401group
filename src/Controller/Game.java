@@ -8,6 +8,7 @@ package Controller;
 import Model.*;
 import View.*;
 import java.util.Scanner;
+import java.util.*;
 
 /**
  *
@@ -38,14 +39,48 @@ public class Game {
         ticketDeck.shuffleTicketdeck();
         player1 = new Player(view.PlayerName());
         setupPlayer(player1);
-        player2 = new Player(view.PlayerName());
-        setupPlayer(player2);
+        player2 = new Player("AIComputer");
+        setupPlayerAI(player2);
         setupZone();
         setupDiscard();
     }
     
     public void setupBoard() {  // setup's for future features
         board = new Board();    // hard coded
+    }
+    
+    public void setupPlayerAI(Player player) {
+        
+        player.addTrainCard(trainDeck.draw());
+        player.addTrainCard(trainDeck.draw());
+        player.addTrainCard(trainDeck.draw());
+        player.addTrainCard(trainDeck.draw());
+
+        TicketCard tc1 = ticketDeck.drawTicketCard();
+        TicketCard tc2 = ticketDeck.drawTicketCard();
+        TicketCard tc3 = ticketDeck.drawTicketCard();
+        
+        Random ran = new Random(); 
+        int next = ran.nextInt(4) + 1;
+        
+        switch(next){
+            case 1: player.addTicketCard(tc1);
+                    player.addTicketCard(tc2);
+                    player.addTicketCard(tc3);
+                    break;
+            case 2: player.addTicketCard(tc1);
+                    player.addTicketCard(tc2);
+                    ticketDeck.addTicketDeck(tc3);
+                    break;
+            case 3: player.addTicketCard(tc1);
+                    player.addTicketCard(tc3);
+                    ticketDeck.addTicketDeck(tc2);
+                    break;
+            case 4: player.addTicketCard(tc2);
+                    player.addTicketCard(tc3);
+                    ticketDeck.addTicketDeck(tc1);
+                    break;        
+        }
     }
     
     public void setupPlayer(Player player) {
@@ -118,7 +153,8 @@ public class Game {
             view.printToString(players[i].toString());  // Print player
             view.printToString(zone.toString());    // Print card zone
             
-            performAction(players[i]);
+            if (i==0) performAction(players[i]);
+            else performActionAI(players[i]);
             
             endGame = endGame || players[i].endOfGame();
             
@@ -138,6 +174,69 @@ public class Game {
             case 3: drawTicketCards(player);
                     break;
             case 4: break;  // Skip turn
+        }
+    }
+    
+    public void performActionAI(Player player) {
+        Random ran = new Random(); 
+        int next = ran.nextInt(4) + 1;
+        switch(next) {
+            case 1: drawTrainCards(player);
+                    break;
+            case 2: claimPath(player);
+                    break;
+            case 3: drawTicketCards(player);
+                    break;
+            case 4: break;  // Skip turn
+        }
+    }
+    
+    public void drawTrainCardsAI(Player player) {
+        
+        Random ran = new Random(); 
+        int next1 = ran.nextInt(2) + 1;
+        switch(next1){
+            case 1: player.addTrainCard(trainDeck.draw());
+                    int next2 = ran.nextInt(2) + 1;
+                    switch(next2){
+                        case 1: player.addTrainCard(trainDeck.draw());
+                                break;
+                        case 2: int next3 = ran.nextInt(5);
+                                player.addTrainCard(zone.pickCard(next3));
+                                zone.addCard(trainDeck.draw());
+                                if (zone.hasThreeRainbows()) setupZone();
+                                break;
+                    }
+                    break;
+            case 2: int next4 = ran.nextInt(5);
+                    TrainCard card1 = zone.pickCard(next4);
+                    player.addTrainCard(card1);
+                    zone.addCard(trainDeck.draw());
+                    if (zone.hasThreeRainbows()) setupZone();
+                    if (card1.getValue() == VALUE.RAINBOW) break;
+                    else{
+                        int next5 = ran.nextInt(2) + 1;
+                        switch(next5){
+                        case 1: player.addTrainCard(trainDeck.draw());
+                                break;
+                        case 2: int next6 = ran.nextInt(5);
+                                TrainCard card2 = zone.pickCard(next6);
+                                if (card2.getValue() != VALUE.RAINBOW) player.addTrainCard(card2);
+                                else {
+                                    do {
+                                        next6 = ran.nextInt(5);
+                                        zone.addCard(card2);
+                                        card2 = zone.pickCard(next6);
+                                        if (card2.getValue() != VALUE.RAINBOW) player.addTrainCard(card2);
+                                    }
+                                    while (card2.getValue() == VALUE.RAINBOW);
+                                }
+                                zone.addCard(trainDeck.draw());
+                                if (zone.hasThreeRainbows()) setupZone();
+                                break;
+                    }
+                    }
+                    break;        
         }
     }
     
@@ -186,6 +285,30 @@ public class Game {
                     }
                     }
                     break;        
+        }
+    }
+    
+    public void claimPathAI(Player player) {
+        Path claim = board.getPath(i, j);
+        VALUE color = null;
+        switch(view.promptColor(claim.getColor1(), claim.getColor2())) {
+            case 1: color = claim.getColor1();
+                    break;
+            case 2: color = claim.getColor2();
+                    break;
+        }
+        board.claimPath(player, color, i, j);   // Claim path and color for player
+        player.addScore(claim.getValue());      // Add score to player
+        player.subtractTrains(claim.getLength());   // Subtract trainsasdf
+        
+        boolean done = false;   // Remove the set of train cards
+        int index = 0;
+        while(!done) {
+            index = view.promptRemoveColor(color, player.getHandTrainC());
+            if(index != -1)
+                player.removeTrainCard(index);
+            else
+                done = true;
         }
     }
     

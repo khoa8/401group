@@ -139,7 +139,22 @@ public class Display {
             return 1;
         }
     }
-    
+    public int protectionMoney(int pay){
+        int i = -1;
+        if(pay == 0){
+            System.out.println("Do you want to play with game rule Protection Money?\n");
+            System.out.println("Protection Money rule: choose to pay 1 train card before each turn or");
+            System.out.println("have a chance to loose nothing, 10 trains, 2 train cards, 2 ticket cards\n");
+            System.out.println("1. yes \n -1. no\n");
+            return stdin.nextInt();
+        }
+        if(pay > 0){
+            System.out.println("Will you pay the protection fee of 1 train card?");
+            System.out.println("1. yes \n 2. no\n");
+            i = stdin.nextInt();
+        }
+        return i;
+    }
     public void printEndGame() {
         System.out.println("Everyone's last turn !");
     }

@@ -148,7 +148,7 @@ public class Display {
             System.out.println("1. yes \n -1. no\n");
             return stdin.nextInt();
         }
-        if(pay > 0){
+        else if(pay > 0){
             System.out.println("Will you pay the protection fee of 1 train card?");
             System.out.println("1. yes \n 2. no\n");
             i = stdin.nextInt();

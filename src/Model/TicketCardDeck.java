@@ -15,13 +15,13 @@ public class TicketCardDeck {
     
     public TicketCardDeck() {
         // create ticket cards and ticket deck
-        Ticketdeck.add( 0, new TicketCard(0, 1, 1));
-        Ticketdeck.add( 1, new TicketCard(0, 2, 1));
-        Ticketdeck.add( 2, new TicketCard(0, 3, 1));
-        Ticketdeck.add( 3, new TicketCard(1, 2, 1));
-        Ticketdeck.add( 4, new TicketCard(1, 4, 1));
-        Ticketdeck.add( 5, new TicketCard(2, 3, 1));
-        Ticketdeck.add( 6, new TicketCard(2, 4, 1));
+        Ticketdeck.add( 0, new TicketCard(0, 1, 7));
+        Ticketdeck.add( 1, new TicketCard(0, 2, 3));
+        Ticketdeck.add( 2, new TicketCard(0, 3, 5));
+        Ticketdeck.add( 3, new TicketCard(1, 2, 2));
+        Ticketdeck.add( 4, new TicketCard(1, 4, 6));
+        Ticketdeck.add( 5, new TicketCard(2, 3, 8));
+        Ticketdeck.add( 6, new TicketCard(2, 4, 4));
         Ticketdeck.add( 7, new TicketCard(3, 4, 1));
     }
     public TicketCard drawTicketCard(){

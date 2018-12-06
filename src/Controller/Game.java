@@ -181,11 +181,11 @@ public class Game {
         Random ran = new Random(); 
         int next = ran.nextInt(4) + 1;
         switch(next) {
-            case 1: drawTrainCards(player);
+            case 1: drawTrainCardsAI(player);
                     break;
-            case 2: claimPath(player);
+            case 2: claimPathAI(player);
                     break;
-            case 3: drawTicketCards(player);
+            case 3: drawTicketCardsAI(player);
                     break;
             case 4: break;  // Skip turn
         }
@@ -289,27 +289,58 @@ public class Game {
     }
     
     public void claimPathAI(Player player) {
+        Random ran = new Random(); 
+        boolean fitColor = true;
+        boolean fitColor1 = false;
+        boolean fitColor2 = false;
+        int score,length;
+        do
+        {
+        int next = ran.nextInt(player.getHandTicketCSize());
+        int i = player.getTicketCard(next).getLocation1();
+        int j = player.getTicketCard(next).getLocation2();
         Path claim = board.getPath(i, j);
         VALUE color = null;
-        switch(view.promptColor(claim.getColor1(), claim.getColor2())) {
+        int index1 = -1,index2 = -1;
+        for(int c = 0; c < player.getHandTrainCSize(); c++){
+            if (claim.getColor1() == player.getTrainCard(c).getValue()){
+                fitColor1 = true;
+                index1=c;
+            }
+            if (claim.getColor2() == player.getTrainCard(c).getValue()){
+                fitColor2 = true;
+                index2=c;
+            }
+        }
+        if (fitColor1 == true && fitColor2 == true){
+            
+        int next1 = ran.nextInt(2)+1;
+        switch(next1) {
             case 1: color = claim.getColor1();
+                    player.removeTrainCard(index1);
                     break;
             case 2: color = claim.getColor2();
+                    player.removeTrainCard(index2);
                     break;
         }
-        board.claimPath(player, color, i, j);   // Claim path and color for player
-        player.addScore(claim.getValue());      // Add score to player
-        player.subtractTrains(claim.getLength());   // Subtract trainsasdf
-        
-        boolean done = false;   // Remove the set of train cards
-        int index = 0;
-        while(!done) {
-            index = view.promptRemoveColor(color, player.getHandTrainC());
-            if(index != -1)
-                player.removeTrainCard(index);
-            else
-                done = true;
         }
+        else if (fitColor1 == true && fitColor2 == false){
+            color = claim.getColor1();
+            player.removeTrainCard(index1);
+        }
+        else if (fitColor2 == true && fitColor1 == false){
+            color = claim.getColor2();
+            player.removeTrainCard(index2);
+        }
+        else fitColor = false;
+        board.claimPath(player, color, i, j);   // Claim path and color for player
+        score = claim.getValue();
+        length = claim.getLength();
+        }
+        while(!fitColor);
+        player.addScore(score);      // Add score to player
+        player.subtractTrains(length);   // Subtract trainsasdf
+        
     }
     
     public void claimPath(Player player) {
@@ -336,6 +367,69 @@ public class Game {
                 player.removeTrainCard(index);
             else
                 done = true;
+        }
+    }
+    
+    public void drawTicketCardsAI(Player player) {
+        TicketCard t1 = null;
+        TicketCard t2 = null;
+        TicketCard t3 = null;
+        if(!ticketDeck.Ticketdeck.isEmpty()){
+        t3 = player.getTicketCard(player.getHandTicketCSize()-1);
+        player.addTicketCard(ticketDeck.drawTicketCard());
+        }
+        if(!ticketDeck.Ticketdeck.isEmpty()){
+        t2 = player.getTicketCard(player.getHandTicketCSize()-1);
+        player.addTicketCard(ticketDeck.drawTicketCard());
+        }
+        if(!ticketDeck.Ticketdeck.isEmpty()){
+        t1 = player.getTicketCard(player.getHandTicketCSize()-1);
+        player.addTicketCard(ticketDeck.drawTicketCard());
+        }
+        
+        Random ran = new Random(); 
+        int next = ran.nextInt(7) + 1;
+        switch(next){
+            case 1:
+                break;
+            case 2:
+                    ticketDeck.addTicketDeck(t3);
+                player.removeTicketCard(player.getHandTicketCSize()-1);
+                break;
+            case 3:
+                ticketDeck.addTicketDeck(t2);
+                player.removeTicketCard(player.getHandTicketCSize()-2);
+                break;
+            case 4:
+                if(t1 != null) {
+                ticketDeck.addTicketDeck(t1);
+                player.removeTicketCard(player.getHandTicketCSize()-3);
+                }
+                break;
+            case 5:
+                ticketDeck.addTicketDeck(t2);
+                ticketDeck.addTicketDeck(t3);
+                player.removeTicketCard(player.getHandTicketCSize()-1);
+                player.removeTicketCard(player.getHandTicketCSize()-1);               
+                break;
+            case 6:
+                if(t1 != null) {
+                ticketDeck.addTicketDeck(t1);
+                player.removeTicketCard(player.getHandTicketCSize()-3);
+                }
+                ticketDeck.addTicketDeck(t3);
+                player.removeTicketCard(player.getHandTicketCSize()-1);
+                break;
+            case 7:
+                if(t1 != null) {
+                ticketDeck.addTicketDeck(t1);
+                player.removeTicketCard(player.getHandTicketCSize()-3);
+                }
+                if(t2 != null) {
+                ticketDeck.addTicketDeck(t2);
+                player.removeTicketCard(player.getHandTicketCSize()-2);
+                }
+                break;
         }
     }
     

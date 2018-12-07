@@ -108,8 +108,8 @@ public class Game {
         players[1] = player2;
         //
         int i = 0;
-        int pay = 0;    //daniel
-        pay = view.protectionMoney(pay);    //daniel
+        int pay = 0;    //protection money rule's status choose to include/exclude rule
+        pay = view.protectionMoney(pay); //protection money status -1 exclude rule 1 include rule
         int endTurns = NUM_PLAYERS;
         while(!endGame || endTurns > 0) {
             view.printToString(board.toString());   // Print board
@@ -120,7 +120,7 @@ public class Game {
             view.printToString(players[i].toString());  // Print player
             view.printToString(zone.toString());    // Print card zone
             
-            protectionMoney(players[i], pay);    //daniel
+            protectionMoney(players[i], pay);//if pay > 0, protection money rule in play & print player (updated)
             
             performAction(players[i]);
             
@@ -295,12 +295,12 @@ public class Game {
         else if(pay == 2){
         //refuse to pay protection money
         //1 - 6 random roll for possible sabotage
-        // 1,2,3 nothing happens
         pay = (int) ((Math.random() * 100) % 6) + 1;
-            if(pay == 4){
-                player.subtractTrains(10);
+            // 1,2,3 nothing happens
+            if(pay == 4){   //4 remove 10 trains
+                player.subtractTrains(10);  //if # trains < 0 it means you owe trains
             }
-            if(pay == 5){
+            else if(pay == 5){   //5 remove up to 2 train cards, take none if one none
                 if(player.getHandTrainCSize() != 0){
                     take = (int) (Math.random() * 100) % player.getHandTrainCSize();
                     player.removeTrainCard(take);
@@ -310,7 +310,7 @@ public class Game {
                     player.removeTrainCard(take);
                 }
             }
-            if(pay == 6){
+            else if(pay == 6){  //6 remove up to 2 ticket cards, take none if one none
                 if(player.getHandTicketCSize() != 0){
                     take = (int) (Math.random() * 100) % player.getHandTicketCSize();
                     player.removeTicketCard(take);

@@ -139,7 +139,7 @@ public class Display {
             return 1;
         }
     }
-    public int protectionMoney(int pay){
+    public int protectionMoney(int pay, int ai){
         int i = -1; //default case of don't want protectionMoney rule
         if(pay == 0){   //choose if you want Protection Money rule in game
             System.out.println("Do you want to play with game rule Protection Money?\n");
@@ -151,7 +151,13 @@ public class Display {
         else if(pay > 0){   //choose if you want to pay protection fee
             System.out.println("Will you pay the protection fee of 1 train card?");
             System.out.println("1. yes \n 2. no\n");
-            return stdin.nextInt();
+            if (ai == 1){   //ai is assumed to be player 2
+                System.out.println("2\n"); //ai always choose not to pay protection fee
+                i = 2;
+            }
+            else {  //player 1 (human player)
+                i = stdin.nextInt();
+            }
         }
         return i;
     }

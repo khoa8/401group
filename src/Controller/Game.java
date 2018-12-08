@@ -109,7 +109,7 @@ public class Game {
         //
         int i = 0;
         int pay = 0;    //protection money rule's status choose to include/exclude rule
-        pay = view.protectionMoney(pay); //protection money status -1 exclude rule 1 include rule
+        pay = view.protectionMoney(pay, i); //protection money status -1 exclude rule 1 include rule
         int endTurns = NUM_PLAYERS;
         while(!endGame || endTurns > 0) {
             view.printToString(board.toString());   // Print board
@@ -120,7 +120,7 @@ public class Game {
             view.printToString(players[i].toString());  // Print player
             view.printToString(zone.toString());    // Print card zone
             
-            protectionMoney(players[i], pay);//if pay > 0, protection money rule in play & print player (updated)
+            protectionMoney(players[i], pay, i);//if pay > 0, protection money rule in play & print player (updated)
             
             performAction(players[i]);
             
@@ -279,14 +279,14 @@ public class Game {
                 break;
         }
     }
-    public void protectionMoney(Player player, int pay) {   //daniel
+    public void protectionMoney(Player player, int pay, int ai) {   //daniel
         int take;
         if(pay == -1){
         //-1 for if players choose to not play with this game rule    
         }
         else{
         //ask if player wants to pay protection money
-        pay = view.protectionMoney(pay);
+        pay = view.protectionMoney(pay, ai);
         if(pay == 1){
         //pay protection money (1 train card)
             take = (int) (Math.random() * 100) % player.getHandTrainCSize();

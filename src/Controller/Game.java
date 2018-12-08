@@ -35,18 +35,20 @@ public class Game {
         setupBoard();
         trainDeck = new TrainCardDeck();
         trainDeck.shuffle();
-        ticketDeck = new TicketCardDeck();
+        ticketDeck = new TicketCardDeck(board.getNumCities());
         ticketDeck.shuffleTicketdeck();
-        player1 = new Player(view.PlayerName());
+        int trainsnum = view.promptTrains();
+        player1 = new Player(view.PlayerName(), trainsnum);
         setupPlayer(player1);
-        player2 = new Player("AIComputer");
+        player2 = new Player("AIComputer", trainsnum);
         setupPlayerAI(player2);
         setupZone();
         setupDiscard();
     }
     
-    public void setupBoard() {  // setup's for future features
-        board = new Board();    // hard coded
+    public void setupBoard() {
+        board = new Board(view.promptNum());
+        view.printToString(board.toString());
     }
     
     public void setupPlayerAI(Player player) {

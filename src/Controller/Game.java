@@ -8,6 +8,7 @@ package Controller;
 import Model.*;
 import View.*;
 import java.util.Scanner;
+import java.util.*;
 
 /**
  *
@@ -38,14 +39,48 @@ public class Game {
         ticketDeck.shuffleTicketdeck();
         player1 = new Player(view.PlayerName());
         setupPlayer(player1);
-        player2 = new Player(view.PlayerName());
-        setupPlayer(player2);
+        player2 = new Player("AIComputer");
+        setupPlayerAI(player2);
         setupZone();
         setupDiscard();
     }
     
     public void setupBoard() {  // setup's for future features
         board = new Board();    // hard coded
+    }
+    
+    public void setupPlayerAI(Player player) {
+        
+        player.addTrainCard(trainDeck.draw());
+        player.addTrainCard(trainDeck.draw());
+        player.addTrainCard(trainDeck.draw());
+        player.addTrainCard(trainDeck.draw());
+
+        TicketCard tc1 = ticketDeck.drawTicketCard();
+        TicketCard tc2 = ticketDeck.drawTicketCard();
+        TicketCard tc3 = ticketDeck.drawTicketCard();
+        
+        Random ran = new Random(); 
+        int next = ran.nextInt(4) + 1;
+        
+        switch(next){
+            case 1: player.addTicketCard(tc1);
+                    player.addTicketCard(tc2);
+                    player.addTicketCard(tc3);
+                    break;
+            case 2: player.addTicketCard(tc1);
+                    player.addTicketCard(tc2);
+                    ticketDeck.addTicketDeck(tc3);
+                    break;
+            case 3: player.addTicketCard(tc1);
+                    player.addTicketCard(tc3);
+                    ticketDeck.addTicketDeck(tc2);
+                    break;
+            case 4: player.addTicketCard(tc2);
+                    player.addTicketCard(tc3);
+                    ticketDeck.addTicketDeck(tc1);
+                    break;        
+        }
     }
     
     public void setupPlayer(Player player) {
@@ -122,7 +157,8 @@ public class Game {
             
             protectionMoney(players[i], pay);//if pay > 0, protection money rule in play & print player (updated)
             
-            performAction(players[i]);
+            if (i==0) performAction(players[i]);
+            else performActionAI(players[i]);
             
             endGame = endGame || players[i].endOfGame();
             
@@ -142,6 +178,69 @@ public class Game {
             case 3: drawTicketCards(player);
                     break;
             case 4: break;  // Skip turn
+        }
+    }
+    
+    public void performActionAI(Player player) {
+        Random ran = new Random(); 
+        int next = ran.nextInt(4) + 1;
+        switch(next) {
+            case 1: drawTrainCardsAI(player);
+                    break;
+            case 2: claimPathAI(player);
+                    break;
+            case 3: drawTicketCardsAI(player);
+                    break;
+            case 4: break;  // Skip turn
+        }
+    }
+    
+    public void drawTrainCardsAI(Player player) {
+        
+        Random ran = new Random(); 
+        int next1 = ran.nextInt(2) + 1;
+        switch(next1){
+            case 1: player.addTrainCard(trainDeck.draw());
+                    int next2 = ran.nextInt(2) + 1;
+                    switch(next2){
+                        case 1: player.addTrainCard(trainDeck.draw());
+                                break;
+                        case 2: int next3 = ran.nextInt(5);
+                                player.addTrainCard(zone.pickCard(next3));
+                                zone.addCard(trainDeck.draw());
+                                if (zone.hasThreeRainbows()) setupZone();
+                                break;
+                    }
+                    break;
+            case 2: int next4 = ran.nextInt(5);
+                    TrainCard card1 = zone.pickCard(next4);
+                    player.addTrainCard(card1);
+                    zone.addCard(trainDeck.draw());
+                    if (zone.hasThreeRainbows()) setupZone();
+                    if (card1.getValue() == VALUE.RAINBOW) break;
+                    else{
+                        int next5 = ran.nextInt(2) + 1;
+                        switch(next5){
+                        case 1: player.addTrainCard(trainDeck.draw());
+                                break;
+                        case 2: int next6 = ran.nextInt(5);
+                                TrainCard card2 = zone.pickCard(next6);
+                                if (card2.getValue() != VALUE.RAINBOW) player.addTrainCard(card2);
+                                else {
+                                    do {
+                                        next6 = ran.nextInt(5);
+                                        zone.addCard(card2);
+                                        card2 = zone.pickCard(next6);
+                                        if (card2.getValue() != VALUE.RAINBOW) player.addTrainCard(card2);
+                                    }
+                                    while (card2.getValue() == VALUE.RAINBOW);
+                                }
+                                zone.addCard(trainDeck.draw());
+                                if (zone.hasThreeRainbows()) setupZone();
+                                break;
+                    }
+                    }
+                    break;        
         }
     }
     
@@ -193,6 +292,61 @@ public class Game {
         }
     }
     
+    public void claimPathAI(Player player) {
+        Random ran = new Random(); 
+        boolean fitColor = true;
+        boolean fitColor1 = false;
+        boolean fitColor2 = false;
+        int score,length;
+        do
+        {
+        int next = ran.nextInt(player.getHandTicketCSize());
+        int i = player.getTicketCard(next).getLocation1();
+        int j = player.getTicketCard(next).getLocation2();
+        Path claim = board.getPath(i, j);
+        VALUE color = null;
+        int index1 = -1,index2 = -1;
+        for(int c = 0; c < player.getHandTrainCSize(); c++){
+            if (claim.getColor1() == player.getTrainCard(c).getValue()){
+                fitColor1 = true;
+                index1=c;
+            }
+            if (claim.getColor2() == player.getTrainCard(c).getValue()){
+                fitColor2 = true;
+                index2=c;
+            }
+        }
+        if (fitColor1 == true && fitColor2 == true){
+            
+        int next1 = ran.nextInt(2)+1;
+        switch(next1) {
+            case 1: color = claim.getColor1();
+                    player.removeTrainCard(index1);
+                    break;
+            case 2: color = claim.getColor2();
+                    player.removeTrainCard(index2);
+                    break;
+        }
+        }
+        else if (fitColor1 == true && fitColor2 == false){
+            color = claim.getColor1();
+            player.removeTrainCard(index1);
+        }
+        else if (fitColor2 == true && fitColor1 == false){
+            color = claim.getColor2();
+            player.removeTrainCard(index2);
+        }
+        else fitColor = false;
+        board.claimPath(player, color, i, j);   // Claim path and color for player
+        score = claim.getValue();
+        length = claim.getLength();
+        }
+        while(!fitColor);
+        player.addScore(score);      // Add score to player
+        player.subtractTrains(length);   // Subtract trainsasdf
+        
+    }
+    
     public void claimPath(Player player) {
         view.promptPath();
         int i = view.promptCity();
@@ -217,6 +371,69 @@ public class Game {
                 player.removeTrainCard(index);
             else
                 done = true;
+        }
+    }
+    
+    public void drawTicketCardsAI(Player player) {
+        TicketCard t1 = null;
+        TicketCard t2 = null;
+        TicketCard t3 = null;
+        if(!ticketDeck.Ticketdeck.isEmpty()){
+        t3 = player.getTicketCard(player.getHandTicketCSize()-1);
+        player.addTicketCard(ticketDeck.drawTicketCard());
+        }
+        if(!ticketDeck.Ticketdeck.isEmpty()){
+        t2 = player.getTicketCard(player.getHandTicketCSize()-1);
+        player.addTicketCard(ticketDeck.drawTicketCard());
+        }
+        if(!ticketDeck.Ticketdeck.isEmpty()){
+        t1 = player.getTicketCard(player.getHandTicketCSize()-1);
+        player.addTicketCard(ticketDeck.drawTicketCard());
+        }
+        
+        Random ran = new Random(); 
+        int next = ran.nextInt(7) + 1;
+        switch(next){
+            case 1:
+                break;
+            case 2:
+                    ticketDeck.addTicketDeck(t3);
+                player.removeTicketCard(player.getHandTicketCSize()-1);
+                break;
+            case 3:
+                ticketDeck.addTicketDeck(t2);
+                player.removeTicketCard(player.getHandTicketCSize()-2);
+                break;
+            case 4:
+                if(t1 != null) {
+                ticketDeck.addTicketDeck(t1);
+                player.removeTicketCard(player.getHandTicketCSize()-3);
+                }
+                break;
+            case 5:
+                ticketDeck.addTicketDeck(t2);
+                ticketDeck.addTicketDeck(t3);
+                player.removeTicketCard(player.getHandTicketCSize()-1);
+                player.removeTicketCard(player.getHandTicketCSize()-1);               
+                break;
+            case 6:
+                if(t1 != null) {
+                ticketDeck.addTicketDeck(t1);
+                player.removeTicketCard(player.getHandTicketCSize()-3);
+                }
+                ticketDeck.addTicketDeck(t3);
+                player.removeTicketCard(player.getHandTicketCSize()-1);
+                break;
+            case 7:
+                if(t1 != null) {
+                ticketDeck.addTicketDeck(t1);
+                player.removeTicketCard(player.getHandTicketCSize()-3);
+                }
+                if(t2 != null) {
+                ticketDeck.addTicketDeck(t2);
+                player.removeTicketCard(player.getHandTicketCSize()-2);
+                }
+                break;
         }
     }
     

@@ -62,6 +62,14 @@ public class Path {
         return color2;
     }
     
+    public int getLoc1() {
+        return loc1;
+    }
+    
+    public int getLoc2() {
+        return loc2;
+    }
+    
     public int getLength() {
         return length;
     }

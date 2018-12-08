@@ -15,10 +15,19 @@ import java.util.Scanner;
  */
 public class Display {
     private final Scanner stdin = new Scanner(System.in);
+    public int promptNum(){
+        System.out.println("Enter number of cities>3: ");
+        return stdin.nextInt();
+    }
     public String PlayerName(){
         System.out.println("Please enter the name of player: ");
-            return stdin.next();
+        return stdin.next();
     }
+    public int promptTrains(){
+        System.out.println("How many trains for each player: ");
+        return stdin.nextInt();
+    }
+    
     public int drawTicketCardAtBeginning(TicketCard tc1,TicketCard tc2,TicketCard tc3){
         System.out.println("a. "+tc1.toString());
         System.out.println("b. "+tc2.toString());

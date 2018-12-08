@@ -31,13 +31,13 @@ public class Player {
     
    
     //initialize player with name, score, assign random color trains
-    public Player(String name){
+    public Player(String name, int trainsnum){
         handTrainC = new ArrayList<>();
         handTicketC = new ArrayList<>();
         //train.addAll(Arrays.asList(CAR.values()));
         this.name = name; 
         score = 0;
-        trains = 6;
+        trains = trainsnum;
     }
     
     public List<TrainCard> getHandTrainC(){

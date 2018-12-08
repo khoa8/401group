@@ -6,44 +6,63 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
  * @author Viet
  */
 public class Board {
-    final int NUM_CITIES = 5;
+    final int NUM_CITIES;
     Path[][] paths; // incidence matrix
     ArrayList<Integer> visited = new ArrayList<>(); // for search algorithm
     //int longest;
     
-    public Board() {
+    public Board(int n) {
+        if(n < 4) n = 4;
+        NUM_CITIES = n;
         paths = new Path[NUM_CITIES][NUM_CITIES];
-        addPath(VALUE.RAINBOW, VALUE.ORANGE, 6, 0, 1, 2);
-        addPath(VALUE.PINK, VALUE.BLACK, 5, 0, 2, 2);
-        addPath(VALUE.RAINBOW, VALUE.RED, 4, 0, 3, 2);
-        addPath(VALUE.WHITE, VALUE.GREEN, 3, 1, 2, 2);
-        addPath(VALUE.RAINBOW, VALUE.PINK, 6, 1, 4, 2);
-        addPath(VALUE.BLUE, VALUE.WHITE, 5, 2, 3, 2);
-        addPath(VALUE.YELLOW, VALUE.BLUE, 4, 2, 4, 2);
-        addPath(VALUE.RAINBOW, VALUE.YELLOW, 3, 3, 4, 2);
+        
+        VALUE[] color = VALUE.values();
+        
+        Random rand = new Random();
+        int[] randInts = new int[4];
+        
+        randInts = randomInts(rand, randInts);  
+        addPath(color[randInts[0]], color[randInts[1]], randInts[2], 0, 1, randInts[3]);
+        for(int i = 0; i < NUM_CITIES - 2; i++) {
+            randInts = randomInts(rand, randInts);  
+            addPath(color[randInts[0]], color[randInts[1]], randInts[2], i, i + 2, randInts[3]);
+            randInts = randomInts(rand, randInts);  
+            addPath(color[randInts[0]], color[randInts[1]], randInts[2], i + 1, i + 2, randInts[3]);
+        }
+    }
+    
+    public int[] randomInts(Random rand, int[] arr) {
+        arr[0] = rand.nextInt(VALUE.values().length);
+        arr[1] = rand.nextInt(VALUE.values().length);
+        while(arr[0] == arr[1]) {
+            arr[1] = rand.nextInt(VALUE.values().length);
+        }
+        arr[2] = rand.nextInt(4) + 3;
+        arr[3] = rand.nextInt(2) + 1;
+        return arr;
+    }
+    
+    public int getNumCities() {
+        return NUM_CITIES;
     }
     
     @Override
     public String toString() {
-        String s =  "0-----1\n" +
-                    "| \\ / |\n" +
-                    "|  2  |\n" +
-                    "| / \\ |\n" +
-                    "3-----4\n\n";
-        s += getPath(0,1).toString() + "\n";
-        s += getPath(0,2).toString() + "\n";
-        s += getPath(0,3).toString() + "\n";
-        s += getPath(1,2).toString() + "\n";
-        s += getPath(1,4).toString() + "\n";
-        s += getPath(2,3).toString() + "\n";
-        s += getPath(2,4).toString() + "\n";
-        s += getPath(3,4).toString() + "\n";
+        String s =  "Board has " + NUM_CITIES + " cities:\n";
+        for(int i = 0; i < NUM_CITIES; i++) {
+            for(int j = 0; j < i; j++) {
+                if(hasPath(i,j)) {
+                    s += getPath(i,j).toString() + "\n";
+                }
+            }
+        }
         return s;
     }
     

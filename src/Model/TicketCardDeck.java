@@ -5,6 +5,7 @@
  */
 package Model;
 import java.util.ArrayList;
+import java.util.Random;
 /**
  *
  * @author Daniel
@@ -13,16 +14,22 @@ public class TicketCardDeck {
     
     public ArrayList<TicketCard> Ticketdeck = new ArrayList();    //ticket cards deck
     
-    public TicketCardDeck() {
+    public TicketCardDeck(int numCities) {
         // create ticket cards and ticket deck
-        Ticketdeck.add( 0, new TicketCard(0, 1, 7));
-        Ticketdeck.add( 1, new TicketCard(0, 2, 3));
-        Ticketdeck.add( 2, new TicketCard(0, 3, 5));
-        Ticketdeck.add( 3, new TicketCard(1, 2, 2));
-        Ticketdeck.add( 4, new TicketCard(1, 4, 6));
-        Ticketdeck.add( 5, new TicketCard(2, 3, 8));
-        Ticketdeck.add( 6, new TicketCard(2, 4, 4));
-        Ticketdeck.add( 7, new TicketCard(3, 4, 1));
+        Random rand = new Random();
+        int randInt1;
+        int randInt2;
+        int randInt3;
+        for(int i = 0; i < numCities * 2; i ++) {
+            randInt1 = rand.nextInt(numCities);
+            randInt2 = rand.nextInt(numCities);
+            while(randInt1 == randInt2) {
+                randInt2 = rand.nextInt(numCities);
+            }
+            randInt3 = rand.nextInt(11) + 5;
+            Ticketdeck.add( 0, new TicketCard(randInt1, randInt2, randInt3));
+            
+        }
     }
     public TicketCard drawTicketCard(){
         //draw 1 cards from ticket deck and return ticketcard

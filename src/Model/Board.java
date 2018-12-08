@@ -76,62 +76,6 @@ public class Board {
         return false;
     }
     
-    // (longest route rules???)
-    // finds longest route by 
-    // finding longest route starting from i, stopping at j or deadend
-    // and adding it to another route starting from j and stopping at visited or deadend
-    public int longest(Player player, int i, int j, int length) {
-        ArrayList<Integer> temp = new ArrayList<>();
-        temp.add(j);
-        temp = longestHelper(player, i, temp);
-        if(isClaimedBy(player, temp.get(0), j))
-            temp.add(0, j);
-        if(temp.get(0) == j) {
-            System.out.println(temp);
-            return calculateLength(temp);
-        }
-        System.out.println(temp);
-        return calculateLength(temp);
-    }
-    
-    // finds longest route 
-    public ArrayList<Integer> longestHelper(Player player, int i, ArrayList<Integer> v) {
-        ArrayList<Integer> biggest = v; // list of visited cities
-        ArrayList<Integer> tempV = null;
-        if(!v.contains(i)) {    // if i not visited
-            v.add(0, i);    // adds i to visited
-            for(int n = 0; n < NUM_CITIES; n++) {
-                if(isClaimedBy(player, i, n)) {
-                    tempV = longestHelper(player, n, new ArrayList<>(v));
-                    if(calculateLength(biggest) < calculateLength(tempV)) {
-                        biggest = tempV;
-                    }
-                }
-            }
-            return biggest;
-        }
-        else {  // if i visited
-            return v;
-        }
-    }
-    
-    //sum of paths to visited cities 
-    public int calculateLength(ArrayList<Integer> v) {
-        int n = 0;
-        for(int i = 0; i < v.size() - 1; i++)
-            n += getPath(v.get(i), v.get(i+1)).getLength();
-        return n;
-    }
-    
-    public ArrayList<Integer> reverseVisited(ArrayList<Integer> v) {
-        ArrayList<Integer> reverse = new ArrayList<>();
-        for(int i: v) {
-            reverse.add(i);
-        }
-        return reverse;
-    }
-    
-    
     // if player paths for city1 or city2 do not exists,
     // then return false
     // else do search algorithm from city1 to city2

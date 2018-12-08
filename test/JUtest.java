@@ -126,11 +126,4 @@ public class JUtest {
         assertFalse(board.checkTicket(player, card));
     }
     
-    @Test
-    public void testlongest() {
-        board.claimPath(player, VALUE.RAINBOW, 0, 3);
-        int n = board.longest(player, 1, 4, 0);
-        assertEquals(15, n);
-    }
-    
 }

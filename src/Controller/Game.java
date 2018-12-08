@@ -95,7 +95,7 @@ public class Game {
         }while(zone.hasThreeRainbows());
     }
     
-    public void setupDiscard() {
+    public void setupDiscard() {    //initialize discardpile class
         discarded = new DiscardPile();
     }
     
@@ -108,6 +108,8 @@ public class Game {
         players[1] = player2;
         //
         int i = 0;
+        int pay = 0;    //protection money rule's status choose to include/exclude rule
+        pay = view.protectionMoney(pay); //protection money status -1 exclude rule 1 include rule
         int endTurns = NUM_PLAYERS;
         while(!endGame || endTurns > 0) {
             view.printToString(board.toString());   // Print board
@@ -117,6 +119,8 @@ public class Game {
             }
             view.printToString(players[i].toString());  // Print player
             view.printToString(zone.toString());    // Print card zone
+            
+            protectionMoney(players[i], pay);//if pay > 0, protection money rule in play & print player (updated)
             
             performAction(players[i]);
             
@@ -217,45 +221,45 @@ public class Game {
     }
     
     public void drawTicketCards(Player player) {
-        TicketCard t1 = null;
-        TicketCard t2 = null;
+        TicketCard t1 = null;   //ticket cards 
+        TicketCard t2 = null;   //t1 is a, t2 is b, t3 is c
         TicketCard t3 = null;
-        if(!ticketDeck.Ticketdeck.isEmpty()){
+        if(!ticketDeck.Ticketdeck.isEmpty()){   //add ticket card to hand if ticket deck isn't empty
         t3 = player.getTicketCard(player.getHandTicketCSize()-1);
         player.addTicketCard(ticketDeck.drawTicketCard());
         }
-        if(!ticketDeck.Ticketdeck.isEmpty()){
+        if(!ticketDeck.Ticketdeck.isEmpty()){   //add ticket card to hand if ticket deck isn't empty
         t2 = player.getTicketCard(player.getHandTicketCSize()-1);
         player.addTicketCard(ticketDeck.drawTicketCard());
         }
-        if(!ticketDeck.Ticketdeck.isEmpty()){
+        if(!ticketDeck.Ticketdeck.isEmpty()){   //add ticket card to hand if ticket deck isn't empty
         t1 = player.getTicketCard(player.getHandTicketCSize()-1);
         player.addTicketCard(ticketDeck.drawTicketCard());
         }
         switch(view.drawTicketCards(t1, t2, t3)){
-            case 1:
+            case 1: //keep ticketcard 1. All three
                 break;
-            case 2:
+            case 2: //keep ticketcard 2. a + b      and remove c
                     ticketDeck.addTicketDeck(t3);
                 player.removeTicketCard(player.getHandTicketCSize()-1);
                 break;
-            case 3:
+            case 3: //keep ticketcard 3. a + c      and remove b
                 ticketDeck.addTicketDeck(t2);
                 player.removeTicketCard(player.getHandTicketCSize()-2);
                 break;
-            case 4:
+            case 4: //keep ticketcard 4. b + c      and remove a if it isn't null
                 if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
                 player.removeTicketCard(player.getHandTicketCSize()-3);
                 }
                 break;
-            case 5:
+            case 5: //keep ticketcard 5. a      and remove b + c  if they aren't null
                 ticketDeck.addTicketDeck(t2);
                 ticketDeck.addTicketDeck(t3);
                 player.removeTicketCard(player.getHandTicketCSize()-1);
                 player.removeTicketCard(player.getHandTicketCSize()-1);               
                 break;
-            case 6:
+            case 6: //keep ticketcard 6. b      and remove a + c if they aren't null
                 if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
                 player.removeTicketCard(player.getHandTicketCSize()-3);
@@ -263,7 +267,7 @@ public class Game {
                 ticketDeck.addTicketDeck(t3);
                 player.removeTicketCard(player.getHandTicketCSize()-1);
                 break;
-            case 7:
+            case 7: //keep ticketcard 7. c      and remove a + b if they aren't null
                 if(t1 != null) {
                 ticketDeck.addTicketDeck(t1);
                 player.removeTicketCard(player.getHandTicketCSize()-3);
@@ -275,7 +279,51 @@ public class Game {
                 break;
         }
     }
-    
+    public void protectionMoney(Player player, int pay) {   //daniel
+        int take;
+        if(pay == -1){
+        //-1 for if players choose to not play with this game rule    
+        }
+        else{
+        //ask if player wants to pay protection money
+        pay = view.protectionMoney(pay);
+        if(pay == 1){
+        //pay protection money (1 train card)
+            take = (int) (Math.random() * 100) % player.getHandTrainCSize();
+            player.removeTrainCard(take);
+        }
+        else if(pay == 2){
+        //refuse to pay protection money
+        //1 - 6 random roll for possible sabotage
+        pay = (int) ((Math.random() * 100) % 6) + 1;
+            // 1,2,3 nothing happens
+            if(pay == 4){   //4 remove 10 trains
+                player.subtractTrains(10);  //if # trains < 0 it means you owe trains
+            }
+            else if(pay == 5){   //5 remove up to 2 train cards, take none if one none
+                if(player.getHandTrainCSize() != 0){
+                    take = (int) (Math.random() * 100) % player.getHandTrainCSize();
+                    player.removeTrainCard(take);
+                }
+                if(player.getHandTrainCSize() != 0){
+                    take = (int) (Math.random() * 100) % player.getHandTrainCSize();
+                    player.removeTrainCard(take);
+                }
+            }
+            else if(pay == 6){  //6 remove up to 2 ticket cards, take none if one none
+                if(player.getHandTicketCSize() != 0){
+                    take = (int) (Math.random() * 100) % player.getHandTicketCSize();
+                    player.removeTicketCard(take);
+                }
+                if(player.getHandTicketCSize() != 0){
+                    take = (int) (Math.random() * 100) % player.getHandTicketCSize();
+                    player.removeTicketCard(take);
+                }
+            }
+        }
+        view.printToString(player.toString());
+        }
+    }
     public void calculateWinner() {
         Player winner = null;
         int highestScore = 0;
